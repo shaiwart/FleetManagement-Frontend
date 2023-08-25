@@ -1,59 +1,32 @@
 import React, { useState, useEffect } from 'react';
-import './LoginForm.css'; // You can create your own CSS file for styling
+import Navbar from "../PageNavigation";
+import { Link, useNavigate } from 'react-router-dom';
+import RegistrationForm from './FillUserDetail';
+import './LoginForm.css'; // You can create your own CSS file for styling 
 
-const LoginPage = () => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [userData, setUserData] = useState(null); // To store fetched user data
-
-  const handleLogin = async () => {
-    if (email && password) {
-      try {
-        const response = await fetch(`http://localhost:8080/api/user/{emailId}/{password}`, {
-         
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({ email, password }),
-        });
+const LoginPage = ({ setUserData }) => {
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+    const navigate = useNavigate();
   
-        if (response.ok) {
-          const userData = await response.json();
-          setUserData(userData); // Store fetched user data
-          setIsLoggedIn(true);
+    const handleSubmit = async (e) => {
+      e.preventDefault();
   
-          // Fetch user data from middleware using the fetched user's email and password
-          const middlewareResponse = await fetch(
-            `http://localhost:8080/api/user/?email=${email}&password=${password}`,
-            {
-              method: 'GET',
-              headers: {
-                'Content-Type': 'application/json',
-              },
-            }
-          );
-  
-          if (middlewareResponse.ok) {
-            const middlewareData = await middlewareResponse.json();
-            console.log('Middleware user data:', middlewareData);
-          } else {
-            console.error('Error fetching middleware data');
-          }
-        } else {
-          console.error('Login failed');
-        }
-      } catch (error) {
-        console.error('Error during login:', error);
+      if (!email || !password) {
+        return;
       }
-    }
-  };
   
-  const handleLogout = () => {
-    setIsLoggedIn(false);
-    setUserData(null);
-  };
+      try {
+        const response = await fetch(`http://localhost:8085/api/user/${email}/${password}`);
+        const result = await response.json();
+        setUserData(result); 
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
+  
+      // Navigate to the registration form
+      navigate('/registrationform');
+    }
 
   return (
     <div className="login-page-container">

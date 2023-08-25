@@ -8,7 +8,7 @@ import ContactUs from './Compnents/Pages/ContactUs';
 import ErrorPage from './Compnents/Pages/ErrorPage'; 
 import HubSelector from './Compnents/Pages/HubSelector';
 import LoginPage from './Compnents/Pages/Login';
-import RegistrationForm from './Compnents/Pages/RegistrationForm';
+import RegistrationForm from './Compnents/Pages/FillUserDetail';
 import Booking from './Compnents/Pages/Booking'; 
 import CategorySelector from './Compnents/Pages/CategorySelector'; 
 import AddOnPage from './Compnents/Pages/AddOnPage'; 

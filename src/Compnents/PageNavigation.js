@@ -3,7 +3,7 @@ import Home from "./Pages/Home";
 import AboutUs from "./Pages/AboutUs";
 import ContactUs from "./Pages/ContactUs";
 import LoginPage from "./Pages/Login";
-import RegistrationForm from "./Pages/RegistrationForm";
+import RegistrationForm from "./Pages/FillUserDetail";
 import Booking from "./Pages/Booking";
 import Membership from "./Pages/Membership";
 import Container from 'react-bootstrap/Container';

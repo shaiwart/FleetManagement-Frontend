@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
-// import './RegistrationForm.css';
-import { Container } from 'react-bootstrap'; 
+import '../../Style/FillUserDetail.css';
+import { Container } from 'react-bootstrap';
 import Navbar from "../PageNavigation";
 import { useNavigate } from 'react-router-dom'; 
 
-function RegistrationForm({userData, setUserData}) {
+function FillUserDetail({ userData, setUserData }) {
 
   const localUserData = {
     firstName: userData.firstName,
@@ -19,7 +19,7 @@ function RegistrationForm({userData, setUserData}) {
     city: userData.city.cityId
     // hub: '', 
     // categoryId: ''
-  }; 
+  };
 
   const dataToAddInUserTable = {
     firstName: userData.firstName,
@@ -32,21 +32,21 @@ function RegistrationForm({userData, setUserData}) {
     passportNo: userData.passportNo,
     state: userData.state.stateId,
     city: userData.city.cityId
-  }; 
+  };
 
   const [formData, setFormData] = useState(localUserData);
-  const navigate = useNavigate(); 
+  const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
+
     // Create an object with the entered data
     const userObject = { ...formData };
     console.log(userObject);
     // You can now handle the userObject as needed (e.g., send to an API)
-    console.log(userObject); 
-    
-    
+    console.log(userObject);
+
+
     setFormData(localUserData); // Reset the form after submission
     setUserData(userObject); // this will update the main data in the App.js 
 
@@ -85,44 +85,44 @@ function RegistrationForm({userData, setUserData}) {
     }));
   }
 
-  const handleCancel = ()=> {
+  const handleCancel = () => {
     navigate('/');
-  }; 
+  };
 
   console.log(userData); // If it prints means App.js wala main data is getting updated.  
 
   return (
-    <div>
-      <Navbar/>
-      <h3>Registration Form</h3> 
-      <form className='form' onSubmit={handleSubmit}>
-        {Object.keys(localUserData).map((field, index) => (
-          <div className='form-row' key={index}>
-            <label htmlFor={field} className='form-label'>
-              {field}
-            </label>
-            <input
-              type='text'
-              className='form-input'
-              id={field}
-              value={formData[field]}
-              onChange={(e) => handleInputChange(field, e.target.value)}
-            />
-          </div>
-        ))}
-        {/* <button type='submit' className='btn btn-block'>
-          Submit
-        </button>  */}
-
-        <div className="card">
-                <div className="card-body">
-                    <button type='submit' className="btn btn-primary">Go Ahead</button> 
-                    <button className="btn btn-secondary" onClick={handleCancel}>Cancel</button>
-                </div>
+    <>
+      <Navbar />
+      <div className='registration-page-container'>
+        <h3 className='welcome-message'>Fill Your Details</h3> 
+        <form className='registration-form' onSubmit={handleSubmit}>
+          {Object.keys(localUserData).map((field, index) => (
+            <div className='form-row' key={index}>
+              <label htmlFor={field} className='form-label'>
+                {field}
+              </label>
+              <input
+                type='text'
+                className='form-input'
+                id={field}
+                value={formData[field]}
+                onChange={(e) => handleInputChange(field, e.target.value)}
+              />
             </div>
-      </form>
-    </div>
+          ))}
+          <div className='buttons'>
+            <button type='submit' className='register-button'>
+              Go Ahead
+            </button>
+            <button className='direct-booking-button' onClick={handleCancel}>
+              Cancel
+            </button>
+          </div>
+        </form>
+      </div>
+    </>
   );
 }
 
-export default RegistrationForm;
+export default FillUserDetail;
