@@ -90,22 +90,3 @@ export default function Home({ homePageData, setHomePageData }) {
         </section>
     )
 }
-
-
-
-{/* <Navbar/>
-                <h1>Home Page</h1>
-                <br/> */}
-{/* <CityState setCityId={props.setCityId}  /> */ }
-{/* <button onClick={fun}>Button</button> */ }
-
-
-// <States setCitiesList={setCitiesList} stateList={stateList} setStateList={setStateList} stateId={stateId} setStateId={setStateId}></States>
-// <Cities homePageData={homePageData} setHomePageData={setHomePageData} citiesList={citiesList} setCitiesList={setCitiesList} stateId={stateId}/>
-
-
-
-{/* <CityState homePageData={homePageData} setHomePageData={setHomePageData} isPickup={1} isDrop={0} />
-                <CityState homePageData={homePageData} setHomePageData={setHomePageData} isPickup={0} isDrop={1} />  */}
-
-{/* <Link to='/hubselector' element={<HubSelector />}> Go to Hubs Selcector </Link>  */ }

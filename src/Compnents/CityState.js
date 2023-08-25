@@ -9,6 +9,7 @@ export default function CityState({homePageData, setHomePageData, isPickup}) {
     console.log("CityState-> "); 
     console.log(cityId); 
 
+    
     return (
         <section>
                 <td><label for='loc'>Enter State</label></td>
@@ -21,19 +22,3 @@ export default function CityState({homePageData, setHomePageData, isPickup}) {
     )
 
 }
-
-// export default function CityState(props) {
-//     const [citiesList, setCitiesList] = useState([]); 
-//     const [cityId, setCityId] = useState(0); 
-//     // const {setCityId} = props; 
-
-//     return (
-//         <section>
-//                 <td><label for='loc'>Enter State</label></td>
-//                 <td> <States setCitiesList={setCitiesList} citiesList={citiesList} ></States> </td>
-//                 <td> <Cities citiesList={citiesList} setCityId={setCityId} ></Cities> </td>
-//                 <td></td>
-//         </section>
-//     )
-
-// }

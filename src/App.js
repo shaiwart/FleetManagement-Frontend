@@ -31,8 +31,8 @@ function App() {
     state: '',
     city: ''
     // hub: '',
-    // categoryId: ''
-  });
+    // categoryId: '' 
+  }); 
 
 
   const [homePageData, setHomePageData] = useState({ 

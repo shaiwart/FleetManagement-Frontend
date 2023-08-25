@@ -9,18 +9,6 @@ export default function Cities({ setHomePageData, isPickup, citiesList, setCitie
         console.log(selectedCityId);  
 
         setHomePageData(prevData => ({ ...prevData, pickupCity: selectedCityId }));
-
-
-        // if (isPickup == 1) { // Means pickup wala component 
-        //     setHomePageData(prevData => ({ ...prevData, pickupHub: selectedCityId })); 
-        //     // console.log("-->");
-        //     // console.log(selectedCityId);
-        // }
-        // else { // drop wala component 
-        //     setHomePageData(prevData => ({ ...prevData, dropHub: selectedCityId }));
-        //     console.log("-->");
-        //     console.log(selectedCityId);
-        // }
     }
 
 
