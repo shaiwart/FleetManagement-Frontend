@@ -10,7 +10,8 @@ function BookingPage({ userData, homePageData }) {
     const handleCancel=()=>{
         navigate("/"); 
     }
-    const handleConfirm=()=>{
+    const handleConfirm=()=>{ 
+        
         navigate("/successpage"); 
     }
 
