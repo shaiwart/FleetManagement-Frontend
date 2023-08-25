@@ -1,13 +1,14 @@
 import { useState, useEffect } from "react";
 import { Link, useNavigate } from 'react-router-dom';
-import Navbar from "../PageNavigation";
+import Navbar from "../PageNavigation"; 
+import '../../Style/LocationSelector.css'; 
 
 export default function HubSelector(props) {
 
-    const homePageData = props.homePageData; 
-    const setHomePageData = props.setHomePageData; 
-    const cityId = homePageData.pickupCity; 
-    const [hubsList, setHubsList] = useState([]); 
+    const homePageData = props.homePageData;
+    const setHomePageData = props.setHomePageData;
+    const cityId = homePageData.pickupCity;
+    const [hubsList, setHubsList] = useState([]);
     const navigate = useNavigate();
     // let [cityId, setCityId] = useState(0); 
 
@@ -17,9 +18,9 @@ export default function HubSelector(props) {
     //     setCityId(cityId); 
     // } 
 
-    console.log(cityId); 
+    console.log(cityId);
 
-    
+
     // useEffect(() => {
     //     fetch(`http://localhost:8085/api/hubs/${cityId}`, {
     //         method : "GET",
@@ -42,22 +43,42 @@ export default function HubSelector(props) {
         // onHubClick(hubId); 
         setHomePageData(prevData => ({ ...prevData, pickupHub: hubId }));
         navigate('/categoryselector');
-    }; 
+    };
 
     return (
         <section className="section">
             <Navbar />
-            <h1>Hub Selector Page</h1>
-            <br />
+            <div className="location-selector">
+    <h2>Location Selection</h2>
+    <p>Select a Pick-up / Return location.</p>
+    <form>
+        {hubsList.map(location => (
+            <div key={location.hubId} className="location-item">
+                <label htmlFor={`location-${location.hubId}`} className="radio-label">
+                    <input
+                        type="radio"
+                        name="selectedLocation"
+                        value={location.hubName}
+                        id={`location-${location.hubId}`}
+                        onChange={() => handleHubClick(location.hubId)}
+                    />
+                    <span className="location-name">
+                        {location.hubName}
+                    </span>
+                </label>
+                <p className="location-email">{location.address}</p>
+            </div>
+        ))}
+    </form>
+</div>
 
-            {/* <select>
-                <option value="SelectCities">Select Hubs</option>
-                {hubsList.map(hub => (
-                    <option key={hub.hubId} value={hub.hubId}>
-                        {hub.hubName} 
-                    </option>
-                ))}
-            </select> */}
+        </section >
+    )
+}
+
+
+{/* <h1>Hub Selector Page</h1>
+            <br />
 
             <table>
                 <thead>
@@ -72,17 +93,12 @@ export default function HubSelector(props) {
                     {hubsList.map(hub => (
                         <tr key={hub.hubId}>
                             <td>{hub.hubId}</td>
-                            <td>{hub.hubName}</td> 
+                            <td>{hub.hubName}</td>
                             <td>{hub.address}</td>
                             <td>{hub.city.cityName}</td>
                             <td>{hub.contactNumber}</td>
                             <button className="hub-button" onClick={() => handleHubClick(hub.hubId)}>Select {hub.hubName}</button>
                         </tr>
                     ))}
-            </tbody>
-        </table>
-
-        </section >
-    )
-}
-
+                </tbody>
+            </table> */}
