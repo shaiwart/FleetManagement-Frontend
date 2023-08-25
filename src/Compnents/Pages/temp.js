@@ -1,64 +1,61 @@
-import React, { useState, useEffect } from 'react';
-import Navbar from "../PageNavigation";
-import { Link, useNavigate } from 'react-router-dom';
-import RegistrationForm from './FillUserDetail';
-import './LoginForm.css'; // You can create your own CSS file for styling 
+<div className="background-image">
 
-const LoginPage = ({ setUserData }) => {
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
-    const navigate = useNavigate();
-  
-    const handleSubmit = async (e) => {
-      e.preventDefault();
-  
-      if (!email || !password) {
-        return;
-      }
-  
-      try {
-        const response = await fetch(`http://localhost:8085/api/user/${email}/${password}`);
-        const result = await response.json();
-        setUserData(result); 
-      } catch (error) {
-        console.error('Error fetching data:', error);
-      }
-  
-      // Navigate to the registration form
-      navigate('/registrationform');
-    }
 
-  return (
-    <div className="login-page-container">
-      {isLoggedIn ? (
-        <div className="welcome-message">
-          <h2>Welcome, {userData && userData.username}!</h2>
-          <button onClick={handleLogout}>Logout</button>
-        </div>
-      ) : (
-        <div className="login-form">
-          <h2>Login</h2>
-          <input
-            type="email"
-            placeholder="Email"
-            value={email}
-            onChange={e => setEmail(e.target.value)}
-          />
-          <input
-            type="password"
-            placeholder="Password"
-            value={password}
-            onChange={e => setPassword(e.target.value)}
-          />
-          <button onClick={handleLogin}>Login</button>
-        </div>
-      )}
-      <div className="buttons">
-        <button className="register-button">Register User</button>
-        <button className="direct-booking-button">Direct Booking</button>
-      </div>
-    </div>
-  );
-};
+                <Container className='container ' >
+                    <Row>
+                        <Col style={{ minWidth: 'fit-content' }}> 
+                            <h5>Make Reservation</h5> 
+                            <form>
+                                <table className='tbl'>
+                                    <tr>
+                                        <td><label for='date'>Rental Date & Time :</label></td>
+                                        <td><input type='datetime-local' id='date'></input></td>
+                                    </tr>
+                                    <tr>
+                                        <td><label for='rdate'>Return Date & Time :</label></td>
+                                        <td><input type='datetime-local' id='rdate'></input></td>
+                                    </tr>
+                                    <h6>Pickup Location</h6>
+                                    <tr>
+                                        <div>
+                                            <td><label for='loc'>Enter Airport Code</label></td>
+                                            <td><input type='text' id='loc'></input></td>
+                                            <td><a href='#href'>Find Airport</a></td>
+                                        </div>
+                                    </tr>
+                                    <h6>OR</h6>
+                                    <tr>
+                                        {/* <CityState datacityState={dataFromCityState} sendDataToParent={setDataFromCityState}></CityState>  */}
+                                        <States setCitiesList={setCitiesList} stateList={stateList} setStateList={setStateList} stateId={stateId} setStateId={setStateId}></States>
+                                        <Cities homePageData={homePageData} setHomePageData={setHomePageData} citiesList={citiesList} setCitiesList={setCitiesList} stateId={stateId} />
+                                    </tr>
+                                    <tr>
+                                        <div>
+                                            <td style={{ textAlign: 'end' }}><input type='checkbox'></input></td>
+                                            <td>I may return the car to different location</td>
+                                        </div>
+                                    </tr>
+                                    <h6>Return Location</h6>
+                                    <tr>
+                                        <div>
+                                            <td><label for='loc'>Enter Airport Code</label></td>
+                                            <td><input type='text' id='loc'></input></td>
+                                            <td><a href='#href'>Find Airport</a></td>
+                                        </div>
+                                    </tr>
+                                    <h6>OR</h6>
 
-export default LoginPage;
+                                    <tr>
+                                        {/* <CityState></CityState>  */}
+                                        <States setCitiesList={setCitiesList} stateList={stateList} setStateList={setStateList} stateId={stateId} setStateId={setStateId}></States>
+                                        <Cities homePageData={homePageData} setHomePageData={setHomePageData} citiesList={citiesList} setCitiesList={setCitiesList} stateId={stateId} />
+                                    </tr>
+                                    <tr><td><button><Link to='/hubselector' element={<HubSelector />}> Go to Hubs Selcector </Link></button></td></tr>
+                                </table>
+                            </form>
+                        </Col>
+                        {/* <Col className='homecol2'>2 of 2</Col> */}
+                    </Row>
+
+                </Container>
+            </div>

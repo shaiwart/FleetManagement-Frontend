@@ -13,6 +13,7 @@ import Booking from './Compnents/Pages/Booking';
 import CategorySelector from './Compnents/Pages/CategorySelector'; 
 import AddOnPage from './Compnents/Pages/AddOnPage'; 
 import Membership from './Compnents/Pages/Membership'; 
+import SuccessPage from './Compnents/Pages/SuccessPage'; 
 
 
 function App() {
@@ -28,10 +29,10 @@ function App() {
     aadharNo: '',
     passportNo: '',
     state: '',
-    city: '',
-    hub: '',
-    categoryId: ''
-  }); 
+    city: ''
+    // hub: '',
+    // categoryId: ''
+  });
 
 
   const [homePageData, setHomePageData] = useState({ 
@@ -65,6 +66,7 @@ function App() {
           <Route path='membership' element={<Membership />} /> 
           <Route path='registrationform' element={<RegistrationForm userData={userData} setUserData={setUserData} />} /> 
           <Route path='booking' element={<Booking userData={userData} homePageData={homePageData} />} /> 
+          <Route path='successpage' element={<SuccessPage />} /> 
           
           <Route path='about' element={<AboutUs/>} /> 
           <Route path='contact' element={<ContactUs/>} /> 

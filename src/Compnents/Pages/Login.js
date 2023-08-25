@@ -4,8 +4,6 @@ import { Link, useNavigate } from 'react-router-dom';
 import RegistrationForm from './FillUserDetail';
 import '../../Style/LoginPage.css';
 
-// import './LoginForm.css'; // You can create your own CSS file for styling 
-
 function LoginPage({ setUserData }) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');

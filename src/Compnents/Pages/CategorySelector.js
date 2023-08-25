@@ -18,7 +18,7 @@ function CategorySelector({setHomePageData}) {
 
     const handleCategorySelect = (category) => {
         setHomePageData(prevData => ({ ...prevData, category: category })); // Setting the main data in App.js 
-        setSelectedCategory(category); 
+        // setSelectedCategory(category); // Means i am not sending category data 
     };
 
     const continueBookingHandler = () => {

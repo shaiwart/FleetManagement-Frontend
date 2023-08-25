@@ -4,10 +4,11 @@ import Navbar from "../PageNavigation";
 import States from "../State";
 import HubSelector from "./HubSelector";
 import { Link } from "react-router-dom";
-import { useState } from "react"; 
+import { useState } from "react";
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
-import Col from 'react-bootstrap/Col';
+import Col from 'react-bootstrap/Col'; 
+import '../../Style/Home.css'; 
 
 
 export default function Home({ homePageData, setHomePageData }) {
@@ -26,14 +27,12 @@ export default function Home({ homePageData, setHomePageData }) {
 
     return (
         <section>
-            <Navbar/>
-            <div className="background-image">
-
-
-                <Container className='container ' >
+            <Navbar />
+            <div className='home-page-container'>
+                <Container className='home-form'>
                     <Row>
-                        <Col style={{ minWidth: 'fit-content' }}> 
-                            <h5>Make Reservation</h5> 
+                        <Col style={{ minWidth: 'fit-content' }}>
+                            <h5 className='home-header'>Make Reservation</h5>
                             <form>
                                 <table className='tbl'>
                                     <tr>
@@ -83,9 +82,8 @@ export default function Home({ homePageData, setHomePageData }) {
                                 </table>
                             </form>
                         </Col>
-                        {/* <Col className='homecol2'>2 of 2</Col> */}
+                        {/* ... (other content) */}
                     </Row>
-
                 </Container>
             </div>
 
@@ -102,12 +100,12 @@ export default function Home({ homePageData, setHomePageData }) {
 {/* <button onClick={fun}>Button</button> */ }
 
 
-                // <States setCitiesList={setCitiesList} stateList={stateList} setStateList={setStateList} stateId={stateId} setStateId={setStateId}></States>
-                // <Cities homePageData={homePageData} setHomePageData={setHomePageData} citiesList={citiesList} setCitiesList={setCitiesList} stateId={stateId}/>
+// <States setCitiesList={setCitiesList} stateList={stateList} setStateList={setStateList} stateId={stateId} setStateId={setStateId}></States>
+// <Cities homePageData={homePageData} setHomePageData={setHomePageData} citiesList={citiesList} setCitiesList={setCitiesList} stateId={stateId}/>
 
 
 
 {/* <CityState homePageData={homePageData} setHomePageData={setHomePageData} isPickup={1} isDrop={0} />
                 <CityState homePageData={homePageData} setHomePageData={setHomePageData} isPickup={0} isDrop={1} />  */}
 
-{/* <Link to='/hubselector' element={<HubSelector />}> Go to Hubs Selcector </Link>  */}
+{/* <Link to='/hubselector' element={<HubSelector />}> Go to Hubs Selcector </Link>  */ }
