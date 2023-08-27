@@ -31,7 +31,7 @@ export default function States() {
     return (
         <section>
             <Form.Select aria-label="Select State" onChange={onChangeHandler} onClick={handelClick} >
-                <option> Select State</option>
+                <option> Select State</option> 
                 {stateList.map(state => (
                     <option key={state.stateId} value={state.stateId} >
                         {state.stateName}

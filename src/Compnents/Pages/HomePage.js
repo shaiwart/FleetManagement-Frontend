@@ -1,5 +1,4 @@
 import Cities from "../PickupCity";
-import CityState from "../CityState";
 import Navbar from "../PageNavigation";
 import HubSelector from "./HubSelector";
 import { Link } from "react-router-dom";
@@ -9,10 +8,12 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import '../../Style/Home.css';
 import Form from 'react-bootstrap/Form';
-import PickupState from "../PickupState"; 
+import PickupState from "../PickupState";
 import PickupCity from "../PickupCity";
-import DropState from '../DropState'; 
-import DropCity from '../DropCity'; 
+import DropState from '../DropState';
+import DropCity from '../DropCity';
+import PickupAirport from "../PickupAirport";
+import dropAirport from "../DropAirport";
 
 
 export default function HomePage() {
@@ -29,14 +30,24 @@ export default function HomePage() {
             <Container>
                 <Row>
                     <Col xs={5} style={columnStyle}>
-                        Select Pick-up State and City 
-                        <PickupState /> 
-                        <PickupCity /> 
-                        
-                        Select Drop State and City 
-                        <DropState /> 
-                        <DropCity /> 
 
+                        <Row style={columnStyle}>
+                            Select Airport
+                            <PickupAirport /> 
+
+                            Select Pick-up State and City
+                            <PickupState />
+                            <PickupCity /> 
+                        </Row>
+
+                        <Row style={columnStyle}>
+                            Select Airport
+                            <dropAriport />
+
+                            Select Drop State and City
+                            <DropState />
+                            <DropCity />
+                        </Row>
                     </Col>
                     <Col style={columnStyle}>Car images</Col>
                 </Row>
