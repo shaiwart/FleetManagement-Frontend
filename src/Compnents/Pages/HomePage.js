@@ -1,7 +1,7 @@
 import Cities from "../PickupCity";
-import Navbar from "../PageNavigation";
+import Navbar from "../PageNavigation"; 
 import HubSelector from "./HubSelector";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
@@ -18,6 +18,7 @@ import Button from 'react-bootstrap/Button';
 
 
 export default function HomePage() {
+    const navigate  = useNavigate(); 
 
     const columnStyle = {
         border: '1px solid gray', // Add border
@@ -27,7 +28,7 @@ export default function HomePage() {
 
     return (
         <>
-            <p>hello world</p>
+            <Navbar />
             <Container>
                 <Row>
                     <Col xs={5} style={columnStyle}>
@@ -50,7 +51,7 @@ export default function HomePage() {
                             <DropCity />
                         </Row>
 
-                        <Button variant="secondary">Continue</Button>{' '}
+                        <Button variant="secondary" onClick={()=>{navigate("/hubselector")}}>Continue</Button>
                     </Col>
 
                     <Col style={columnStyle}>Car images</Col>
