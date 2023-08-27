@@ -43,6 +43,24 @@ function FillUserDetail({userData, setUserData}) {
     }
   };
   console.log(data); 
+  localStorage.setItem("city", cityId); 
+  const dataere = { // This data will be serialised and send to the Database 
+    firstName: formData.firstName,
+    lastName: formData.lastName,
+    mobileNumber: formData.mobileNumber,
+    address: formData.address,
+    emailId: formData.emailId,
+    dlNo: formData.dlNo,
+    aadharNo: formData.aadharNo,
+    passportNo: formData.passportNo, 
+    city: {
+      cityId: localStorage.getItem("city") 
+    }, 
+    state: {
+      stateId: 21 
+    }
+  };
+
 
   const handleSubmit = async (e) => {
     e.preventDefault();

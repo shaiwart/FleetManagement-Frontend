@@ -1,8 +1,7 @@
-import logo from './logo.svg';
 import './App.css';
 import { useState } from 'react';
 import { BrowserRouter, Routes, Route} from 'react-router-dom';
-import Home from './Compnents/Pages/Home';
+import HomePage from './Compnents/Pages/HomePage';
 import AboutUs from './Compnents/Pages/AboutUs';
 import ContactUs from './Compnents/Pages/ContactUs'; 
 import ErrorPage from './Compnents/Pages/ErrorPage'; 
@@ -14,41 +13,42 @@ import CategorySelector from './Compnents/Pages/CategorySelector';
 import AddOnPage from './Compnents/Pages/AddOnPage'; 
 import Membership from './Compnents/Pages/Membership'; 
 import SuccessPage from './Compnents/Pages/SuccessPage'; 
+import 'bootstrap/dist/css/bootstrap.min.css'; 
 
 
 function App() {
 
 
-  const [userData, setUserData] = useState({
-    firstName: '',
-    lastName: '',
-    emailId: '',
-    mobileNumber: '',
-    address: '',
-    dlNo: '',
-    aadharNo: '',
-    passportNo: '',
-    state: '',
-    city: ''
-    // hub: '',
-    // categoryId: '' 
-  }); 
+  // const [userData, setUserData] = useState({
+  //   firstName: '',
+  //   lastName: '',
+  //   emailId: '',
+  //   mobileNumber: '',
+  //   address: '',
+  //   dlNo: '',
+  //   aadharNo: '',
+  //   passportNo: '',
+  //   state: '',
+  //   city: ''
+  //   // hub: '',
+  //   // categoryId: '' 
+  // }); 
 
 
-  const [homePageData, setHomePageData] = useState({ 
-    bookingDateAndTime: '', // Add it later 
-    pickupHub: '', 
-    dropHub: '', 
-    category: '', 
-    pickupState: '', 
-    dropState: '', 
-    pickupCity: '', // this is the city by which hubs will be fetched from database
-    dropCity: '' 
-  }); 
+  // const [homePageData, setHomePageData] = useState({ 
+  //   bookingDateAndTime: '', // Add it later 
+  //   pickupHub: '', 
+  //   dropHub: '', 
+  //   category: '', 
+  //   pickupState: '', 
+  //   dropState: '', 
+  //   pickupCity: '', // this is the city by which hubs will be fetched from database
+  //   dropCity: '' 
+  // }); 
 
-  console.log("main data"); 
-  console.log(homePageData.pickupHub); 
-  console.log(homePageData.category); 
+  // console.log("main data"); 
+  // console.log(homePageData.pickupHub); 
+  // console.log(homePageData.category); 
 
 
 
@@ -58,14 +58,14 @@ function App() {
 
       <Routes> 
         
-          <Route path='/' element={<Home homePageData={homePageData} setHomePageData={setHomePageData} />} />
-          <Route path='hubselector' element={<HubSelector setUserData={setUserData} setHomePageData={setHomePageData} homePageData={homePageData} />} /> 
-          <Route path='categoryselector' element={<CategorySelector setUserData={setUserData} setHomePageData={setHomePageData} homePageData={homePageData} />} /> 
-          <Route path='addonpage' element={<AddOnPage setUserData={setUserData} setHomePageData={setHomePageData} homePageData={homePageData} />} /> 
-          <Route path='loginpage' element={<LoginPage setUserData={setUserData}/>} /> 
+          <Route path='/' element={<HomePage />} />
+          <Route path='hubselector' element={<HubSelector />} /> 
+          <Route path='categoryselector' element={<CategorySelector />} /> 
+          <Route path='addonpage' element={<AddOnPage />} /> 
+          <Route path='loginpage' element={<LoginPage />} /> 
           <Route path='membership' element={<Membership />} /> 
-          <Route path='registrationform' element={<RegistrationForm userData={userData} setUserData={setUserData} />} /> 
-          <Route path='booking' element={<Booking userData={userData} homePageData={homePageData} />} /> 
+          <Route path='registrationform' element={<RegistrationForm />} /> 
+          <Route path='booking' element={<Booking  />} /> 
           <Route path='successpage' element={<SuccessPage />} /> 
           
           <Route path='about' element={<AboutUs/>} /> 
@@ -75,7 +75,7 @@ function App() {
           {/* <Route path='dashboard' element={
               <ProtectedRoute user={user}>
                 <Dashboard user={user} />
-              </ProtectedRoute>} />  */}
+              </ProtectedRoute>} />  */} 
               
           <Route path='*' element={<ErrorPage/>} /> 
       </Routes> 
