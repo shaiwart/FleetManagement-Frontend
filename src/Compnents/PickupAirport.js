@@ -6,7 +6,7 @@ export default function PickupAirport() {
     const [airportList, setAirportList] = useState([]); 
 
     const onChangeHandler = async (event) => {
-        console.log(" City Change hua");
+        console.log("pickup airport-> ");
         let tempId = event.target.value; 
         sessionStorage.setItem("pickUpAirportId", tempId); 
     }

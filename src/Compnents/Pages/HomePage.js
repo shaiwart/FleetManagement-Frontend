@@ -13,7 +13,7 @@ import PickupCity from "../PickupCity";
 import DropState from '../DropState';
 import DropCity from '../DropCity';
 import PickupAirport from "../PickupAirport";
-import dropAirport from "../DropAirport";
+import DropAirport from "../DropAirport";
 
 
 export default function HomePage() {
@@ -42,7 +42,7 @@ export default function HomePage() {
 
                         <Row style={columnStyle}>
                             Select Airport
-                            <dropAriport />
+                            <DropAirport />
 
                             Select Drop State and City
                             <DropState />
