@@ -14,6 +14,7 @@ import DropState from '../DropState';
 import DropCity from '../DropCity';
 import PickupAirport from "../PickupAirport";
 import DropAirport from "../DropAirport";
+import Button from 'react-bootstrap/Button';
 
 
 export default function HomePage() {
@@ -21,7 +22,7 @@ export default function HomePage() {
     const columnStyle = {
         border: '1px solid gray', // Add border
         backgroundColor: 'lightgray', // Add gray background color
-        padding: '10px', // Add padding for spacing
+        // padding: '10px', // Add padding for spacing
     };
 
     return (
@@ -48,9 +49,15 @@ export default function HomePage() {
                             <DropState />
                             <DropCity />
                         </Row>
+
+                        <Button variant="secondary">Continue</Button>{' '}
                     </Col>
+
                     <Col style={columnStyle}>Car images</Col>
+
                 </Row>
+
+
             </Container>
         </>
     );
