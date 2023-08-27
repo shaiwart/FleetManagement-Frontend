@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
 import Navbar from '../PageNavigation';
 import { Link, useNavigate } from 'react-router-dom';
+import Form from 'react-bootstrap/Form';
 
 function AddOnPage() {
-  const [selectedAddOns, setSelectedAddOns] = useState([]); 
-  const navigate = useNavigate(); 
+  const [selectedAddOns, setSelectedAddOns] = useState([]);
+  const navigate = useNavigate();
 
   const addonsList = [
     { id: 1, name: 'GPS Navigation', price: 10 },
@@ -18,33 +19,35 @@ function AddOnPage() {
       setSelectedAddOns(selectedAddOns.filter(id => id !== addonId));
     } else {
       setSelectedAddOns([...selectedAddOns, addonId]);
-    }
+    } 
   };
 
   const handleContinueBooking = () => {
     // Handle the booking process with selected add-ons
-    navigate('/loginpage'); 
+    navigate('/filluserdetails');
 
   };
 
   return (
     <div>
       <Navbar />
-      <h1>Add-Ons</h1>
+      <h1>Select Add-Ons</h1>
+
       <div className="add-ons-list">
         {addonsList.map(addon => (
-          <label key={addon.id} className="add-on-label">
+          <label key={addon.id} className="add-on-label"> 
             <input
               type="checkbox"
               checked={selectedAddOns.includes(addon.id)}
               onChange={() => handleAddOnToggle(addon.id)}
             />
             {addon.name} (+${addon.price})
-          </label>
+          </label> 
         ))}
       </div>
       <button onClick={handleContinueBooking}>Continue Booking</button>
-    </div>
+    </div> 
+
   );
 }
 

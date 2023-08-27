@@ -7,7 +7,7 @@ import Button from 'react-bootstrap/Button';
 
 export default function HubSelector() {
     const [hubId, setHubId] = useState(0);
-    const [hubsList, setHubsList] = useState([]); 
+    const [hubsList, setHubsList] = useState(); 
     const navigate = useNavigate();
 
  
@@ -29,6 +29,9 @@ export default function HubSelector() {
     const continueHandler = () => {
         navigate('/categoryselector'); 
     }; 
+    if(hubsList == null) {
+        navigate('/errorpage'); 
+    }
 
     return (
         <section className="section">
@@ -49,7 +52,7 @@ export default function HubSelector() {
                         </tr>
                     </thead>
                     <tbody>
-                        {hubsList.map((hub, index) => ( 
+                        {hubsList?.map((hub, index) => ( 
                             <tr key={hub.hubId}>
                                 <td>{index + 1}</td> 
                                 <td>{hub.hubName}</td>

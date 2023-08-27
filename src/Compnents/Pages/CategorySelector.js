@@ -8,6 +8,7 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Navbar from '../PageNavigation'; 
 import { Link } from 'react-router-dom'; 
+import Button from 'react-bootstrap/Button';
 
 
 
@@ -100,12 +101,8 @@ function CategorySelector() {
                 </tbody>
                 <br></br>
                 <tr>
-                    <td>
-                        <button id="continue" style={{ fontSize: '20px' }} onClick={continueBookingHandler}>Continue Booking</button>
-                    </td>
-                    <td>
-                        <button type="reset" id="cancel" style={{ fontSize: '20px' }} onClick={cancelHandler}>Cancel</button>
-                    </td>
+                    <td> <Button variant="secondary" onClick={continueBookingHandler}>Continue Booking</Button> </td>
+                    <td> <Button variant="secondary" onClick={cancelHandler}>Cancel</Button> </td>
                 </tr>
             </table> 
             <p>You chose: {selectedCategoryName}</p> 
