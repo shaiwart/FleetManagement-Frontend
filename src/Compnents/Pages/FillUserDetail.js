@@ -11,7 +11,7 @@ import FloatingLabel from 'react-bootstrap/FloatingLabel';
 
 function FillUserDetail() {
   const [stateList, setStateList] = useState([]);
-  const [cityList, setCityList] = useState([]);
+  const [cityList, setCityList] = useState([]); 
 
   const [userData, setUserData] = useState({});
   const navigate = useNavigate();
@@ -50,53 +50,11 @@ function FillUserDetail() {
       });
   }
 
+  const handelSubmit=()=>{
+    
 
-  const onChangeHandler = async (event) => {
-    console.log("Change hua");
-    sessionStorage.setItem("userStateId", userData.state.stateId);
-    setStateName(userData.state.stateName);
   }
-
-  const handelClick = async (e) => {
-    // console.log("On click");
-    e.preventDefault();
-
-    try {
-      const response = await fetch("http://localhost:8080/api/states");
-      const result = await response.json();
-      setStateList(result);
-    } catch (error) {
-      console.error('Error fetching data:', error);
-      // yaha pe use navigate use karke Error page pe send karo 
-    }
-  }
-
-
-  const onChangeHandlerCity = async (event) => {
-    console.log(" City Change hua");
-    let tempId = event.target.value;
-    sessionStorage.setItem("pickUpCityId", tempId);
-  }
-
-  const handelClickCity = async (e) => {
-    console.log("On click-> city drop down");
-
-    e.preventDefault();
-    // let temp = sessionStorage.getItem("pickUpStateId"); 
-    // console.log(temp); 
-
-    try {
-
-      console.log("A");
-      const response = await fetch("http://localhost:8080/api/cities/" + sessionStorage.getItem("userStateId"));
-      const result = await response.json();
-      setCityList(result);
-      console.log("B");
-    } catch (error) {
-      console.error('Error fetching data:', error);
-      // yaha pe use navigate use karke Error page pe send karo 
-    }
-  }
+  
 
   console.log(email);
   console.log(password);
@@ -132,7 +90,7 @@ function FillUserDetail() {
 
           <Col style={columnStyle}>
             User details area
-            <Form>
+            <Form onSubmit={handelSubmit}> 
               <Row className="mb-3">
                 <Form.Group as={Col} controlId="formGridFirstName">
                   <Form.Label>First Name</Form.Label>
@@ -182,7 +140,7 @@ function FillUserDetail() {
               </Row>
 
               <Row className="mb-3">
-                <section>
+                {/* <section>
                   <Form.Select aria-label="Select State" onChange={onChangeHandler} onClick={handelClick} >
                     <option> Select State</option>
                     {stateList.map(state => (
@@ -194,19 +152,19 @@ function FillUserDetail() {
                 </section>
 
                 <section>
-                  <Form.Select aria-label="Select City" onChange={onChangeHandlerCity} onClick={handelClickCity} >
+                  <Form.Select aria-label="Select City" onChange={onChangeHandler} onClick={handelClick} >
                     <option> Select City</option>
                     {cityList.map(city => (
-                      <option key={city.cityId} value={city.cityId} >
-                        {city.cityName} 
+                      <option key={city.cityId} value={city.cityId}>
+                        {city.cityName}
                       </option>
                     ))}
                   </Form.Select>
-                </section>
+                </section> */}
 
 
 
-                {/* <Form.Group as={Col} controlId="formGridCityName">
+                <Form.Group as={Col} controlId="formGridCityName">
                   <Form.Label>City Name</Form.Label>
                   <Form.Control type="text" placeholder="Enter City Name" value={cityName} onChange={(event) => { setCityName(event.target.value) }} />
                 </Form.Group>
@@ -214,7 +172,7 @@ function FillUserDetail() {
                 <Form.Group as={Col} controlId="formGridStateName">
                   <Form.Label>State Name</Form.Label>
                   <Form.Control type="text" placeholder="Enter State Name" value={stateName} onChange={(event) => { setStateName(event.target.value) }} />
-                </Form.Group> */}
+                </Form.Group>
               </Row>
 
               <Button variant="primary" type="submit">
