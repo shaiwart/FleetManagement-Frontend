@@ -1,9 +1,11 @@
 import { useState, useEffect } from "react"; 
+import { useNavigate } from "react-router-dom";
 import Form from 'react-bootstrap/Form';
 
 
 export default function PickupAirport() { 
     const [airportList, setAirportList] = useState([]); 
+    const navigate=useNavigate();
 
     const onChangeHandler = async (event) => {
         console.log("pickup airport-> ");
@@ -11,10 +13,14 @@ export default function PickupAirport() {
         sessionStorage.setItem("pickUpAirportId", tempId); 
     }
 
+
+    // const handleClickto = async () => {
+    //     navigate('/HubSelector'); // Navigate to HubSelector component
+    // }
     const handelClick = async (e) => {
         console.log("On click-> drop down"); 
 
-        e.preventDefault(); 
+        // e.preventDefault(); 
         // let temp = sessionStorage.getItem("pickUpStateId"); 
         // console.log(temp); 
 
@@ -36,6 +42,7 @@ export default function PickupAirport() {
 
     return (
         <section>
+            <div>
             <Form.Select aria-label="Select Airport" onChange={onChangeHandler} onClick={handelClick} > 
                 <option> Select Airport</option> 
                 {airportList.map(airport => (
@@ -44,6 +51,11 @@ export default function PickupAirport() {
                     </option> 
                 ))} 
             </Form.Select>
+            </div>
+            <div>
+            {/* <button onClick={handleClickto}>Search hub</button> */}
+            </div>
+            
         </section>
     )
 }

@@ -1,121 +1,83 @@
-import React from 'react';
-import '../../Style/VehicleSelection.css'; 
-import small from '../../Images/small.png';
-import compact from '../../Images/Compact1.jpg';
-import intermediate from '../../Images/Intermediate.jpg';
-import luxury from '../../Images/luxury.png'; 
-import { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import '../../Style/VehicleSelection.css';
 import { useNavigate } from 'react-router-dom';
-import Navbar from '../PageNavigation'; 
-import { Link } from 'react-router-dom'; 
-import Button from 'react-bootstrap/Button';
-
-
+import Navbar from '../PageNavigation';
+import { Col, Row } from "react-bootstrap";
+import Card from "react-bootstrap/Card";
 
 function CategorySelector() {
-    const [selectedCategory, setSelectedCategory] = useState(); 
-    const [selectedCategoryName, setSelectedCategoryName] = useState(); 
-    const navigate = useNavigate();
+  const [CarCategory, setCategory] = useState([]);
+  const navigate = useNavigate();
 
+  useEffect(() => {
+    fetchData();
+  }, []);
 
-    const handleCategorySelect = (category) => {
-        setSelectedCategory(category.id); 
-        setSelectedCategoryName(category.carType); 
-        sessionStorage.setItem("selectedCategoryId" ,category.id); 
-        sessionStorage.setItem("selectedCategoryName" ,category.carType); 
-    };
-
-    const continueBookingHandler = () => {
-        navigate('/addonpage'); 
+  const fetchData = async () => {
+    try {
+      const response = await fetch("http://localhost:8080/api/car_category");
+      const result = await response.json();
+      setCategory(result);
+    } catch (error) {
+      console.error('Error fetching data:', error);
+      // Handle error, you can navigate to an error page here
     }
+  }
 
-    const cancelHandler = ()=> {
-        navigate('/'); 
-    }
+  const handleCategorySelect = (categoryId, dailyRates, weeklyRates, monthlyRates) => {
+    sessionStorage.setItem("pickCategoryId", categoryId);
+    sessionStorage.setItem("dailyRate", dailyRates);
+    sessionStorage.setItem("weeklyRate", weeklyRates);
+    sessionStorage.setItem("monthlyRate", monthlyRates);
+  }
 
-    const vehicles = [
-        {   id: '1', 
-            carType: 'Economy',
-            dailyRate: '$45.99',
-            weeklyRate: '$249.99',
-            monthlyRate: '$799.99',
-            image: small // Path to the image
-        },
-        {
-            id: '2', 
-            carType: 'Compact',
-            dailyRate: '$55.99',
-            weeklyRate: '$279.99',
-            monthlyRate: '$899.99',
-            image: compact // Path to the image
-        },
-        {
-            id: '3', 
-            carType: 'Midsize',
-            dailyRate: '$65.99',
-            weeklyRate: '$299.99',
-            monthlyRate: '$999.99',
-            image: intermediate // Path to the image
-        },
-        {
-            id: '4', 
-            carType: 'Luxury',
-            dailyRate: '$99.99',
-            weeklyRate: '$499.99',
-            monthlyRate: '$1699.99',
-            image: luxury // Path to the image
-        }
-        // ... add more vehicle data entries
-    ];
+  const continueBookingHandler = () => {
+    navigate('/addonpage');
+  }
 
+  const cancelHandler = () => {
+    navigate('/');
+  }
 
-
-    return (
-        <>
-        <Navbar />
-
-        
-        <div className="vehicle-selection">
-            <table className="vehicle-table">
-                <thead>
-                    <tr>
-                        <th>Car Image</th>
-                        <th>Car Type</th>
-                        <th>Daily Rate</th>
-                        <th>Weekly Rate</th>
-                        <th>Monthly Rate</th>
-                        <th>Choose</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {vehicles.map((vehicle, index) => (
-                        <tr key={index}>
-                            <td><img src={vehicle.image} alt={vehicle.carType} className="vehicle-image" /></td>
-                            <td>{vehicle.carType}</td>
-                            <td>{vehicle.dailyRate}</td>
-                            <td>{vehicle.weeklyRate}</td>
-                            <td>{vehicle.monthlyRate}</td>
-                            <td><button className="select-button" onClick={() => handleCategorySelect(vehicle)}> Select </button></td>
-                        </tr>
-                    ))}
-                </tbody>
-                <br></br>
-                <tr>
-                    <td> <Button variant="secondary" onClick={continueBookingHandler}>Continue Booking</Button> </td>
-                    <td> <Button variant="secondary" onClick={cancelHandler}>Cancel</Button> </td>
-                </tr>
-            </table> 
-            <p>You chose: {selectedCategoryName}</p> 
-        </div>
-        </>
-    );
+  return (
+    <>
+      <Navbar />
+      <div className="vehicle-selection">
+        <Row>
+          {CarCategory.map((cat, index) => (
+            <Col key={index}>
+              <Card border='info' style={{ width: "18rem" }}>
+                <Card.Header>{cat.categoryName}</Card.Header>
+                <Card.Img src={cat.imgPath} alt={cat.categoryName} />
+                <Card.Body>
+                  <Card.Text>
+                    <p>Daily Rate: {cat.dailyRates}</p>
+                    <p>Weekly Rate: {cat.weeklyRates}</p>
+                    <p>Monthly Rate: {cat.monthlyRates}</p>
+                  </Card.Text>
+                </Card.Body>
+                <button
+                  className="select-button"
+                  onClick={() =>
+                    handleCategorySelect(
+                      cat.categoryId,
+                      cat.dailyRates,
+                      cat.weeklyRates,
+                      cat.monthlyRates
+                    )
+                  }
+                >
+                  Select
+                </button>
+              </Card>
+            </Col>
+          ))}
+        </Row>
+        <button id="continue" style={{ fontSize: '20px' }} onClick={continueBookingHandler}>Continue Booking</button>
+        <button type="reset" id="cancel" style={{ fontSize: '20px' }} onClick={cancelHandler}>Cancel</button>
+      </div>
+    </>
+  );
 }
 
 export default CategorySelector;
-
-
-
-
-
-
-

@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
 import Navbar from '../PageNavigation';
-import { Link, useNavigate } from 'react-router-dom';
-import Form from 'react-bootstrap/Form';
+import { useNavigate } from 'react-router-dom';
+import '../../Style/addonpage.css';
 
 function AddOnPage() {
-  const [selectedAddOns, setSelectedAddOns] = useState([]);
-  const navigate = useNavigate();
+  const [selectedAddOns, setSelectedAddOns] = useState([]); 
+  const navigate = useNavigate(); 
 
-  const addonsList = [
+  const addons = [
     { id: 1, name: 'GPS Navigation', price: 10 },
     { id: 2, name: 'Child Seat', price: 15 },
     { id: 3, name: 'Wi-Fi Hotspot', price: 5 },
@@ -19,36 +19,54 @@ function AddOnPage() {
       setSelectedAddOns(selectedAddOns.filter(id => id !== addonId));
     } else {
       setSelectedAddOns([...selectedAddOns, addonId]);
-    } 
+    }
   };
 
-  const handleContinueBooking = () => {
-    // Handle the booking process with selected add-ons
-    navigate('/filluserdetails');
+  const handleContinue = () => {
+    // Store selected addons in sessionStorage
+    selectedAddOns.forEach(addonId => {
+      const addon = addons.find(addon => addon.id === addonId);
+      if (addon) {
+        sessionStorage.setItem(`addOnId${addonId}`, addon.id);
+        sessionStorage.setItem(`addonName${addonId}`, addon.name);
+        sessionStorage.setItem(`addonPrice${addonId}`, addon.price);
+      }
+    });
 
-  };
-
+    navigate('/filluserdetails'); // ye change hoga 
+  }
+ 
   return (
-    <div>
+    <div className="add-on-page">
       <Navbar />
-      <h1>Select Add-Ons</h1>
-
-      <div className="add-ons-list">
-        {addonsList.map(addon => (
-          <label key={addon.id} className="add-on-label"> 
-            <input
-              type="checkbox"
-              checked={selectedAddOns.includes(addon.id)}
-              onChange={() => handleAddOnToggle(addon.id)}
-            />
-            {addon.name} (+${addon.price})
-          </label> 
-        ))}
-      </div>
-      <button onClick={handleContinueBooking}>Continue Booking</button>
-    </div> 
-
+      <h1>Add-Ons</h1>
+      <table className="add-ons-table">
+        <thead>
+          <tr>
+            <th>Add-On</th>
+            <th>Price</th>
+            <th>Select</th>
+          </tr>
+        </thead>
+        <tbody>
+          {addons.map(addon => (
+            <tr key={addon.id}>
+              <td>{addon.name}</td>
+              <td>${addon.price}</td>
+              <td>
+                <input
+                  type="checkbox"
+                  onClick={() => handleAddOnToggle(addon.id)}
+                  checked={selectedAddOns.includes(addon.id)}
+                />
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+      <button className="continue" onClick={handleContinue}>Continue</button>
+    </div>
   );
 }
 
-export default AddOnPage; 
+export default AddOnPage;
