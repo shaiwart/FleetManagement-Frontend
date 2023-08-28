@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-// import './RegistrationForm.css';
 import Navbar from "../PageNavigation";
 import { useNavigate } from 'react-router-dom';
 import '../../Style/FillUserDetail.css';
@@ -11,105 +10,102 @@ import Form from 'react-bootstrap/Form';
 import FloatingLabel from 'react-bootstrap/FloatingLabel';
 
 function FillUserDetail() {
+  const [stateList, setStateList] = useState([]);
+  const [cityList, setCityList] = useState([]);
 
-  // let localUserData = {
-  //   firstName: userData.firstName,
-  //   lastName: userData.lastName,
-  //   emailId: userData.emailId,
-  //   mobileNumber: userData.mobileNumber,
-  //   address: userData.address,
-  //   dlNo: userData.dlNo,
-  //   aadharNo: userData.aadharNo,
-  //   passportNo: userData.passportNo,
-  //   state: userData.state.stateId,
-  //   city: userData.city.cityId
-  //   // hub: '', 
-  //   // categoryId: ''
-  // }; 
-
-
-  const [formData, setFormData] = useState({});
+  const [userData, setUserData] = useState({});
   const navigate = useNavigate();
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
 
-  // const data = { // This data will be serialised and send to the Database 
-  //   firstName: formData.firstName,
-  //   lastName: formData.lastName,
-  //   mobileNumber: formData.mobileNumber,
-  //   address: formData.address,
-  //   emailId: formData.emailId,
-  //   dlNo: formData.dlNo,
-  //   aadharNo: formData.aadharNo,
-  //   passportNo: formData.passportNo,
-  //   city: {
-  //     cityId: 2110
-  //   },
-  //   state: {
-  //     stateId: 21
-  //   }
-  // };
+  const [firstName, setFirstName] = useState('');
+  const [lastName, setLastName] = useState('');
+  const [mobileNumber, setMobileNumber] = useState('');
+  const [address, setAddress] = useState('');
+  const [emailId, setEmailId] = useState('');
+  const [dlNo, setDlNo] = useState('');
+  const [aadharNo, setAadharNo] = useState('');
+  const [passportNo, setPassportNo] = useState('');
+  const [cityName, setCityName] = useState('');
+  const [stateName, setStateName] = useState('');
 
-
-  const dataere = { // This data will be serialised and send to the Database 
-    firstName: formData.firstName,
-    lastName: formData.lastName,
-    mobileNumber: formData.mobileNumber,
-    address: formData.address,
-    emailId: formData.emailId,
-    dlNo: formData.dlNo,
-    aadharNo: formData.aadharNo,
-    passportNo: formData.passportNo,
-    city: {
-      cityId: localStorage.getItem("city")
-    },
-    state: {
-      stateId: 21
-    }
-  };
-
-
-  // const handleSubmit = async (e) => {
-  //   e.preventDefault();
-
-  //   // Create an object with the entered data 
-  //   const userObject = { ...formData };
-
-  //   try { 
-  //     const response = await fetch('http://localhost:8085/api/user/add', {
-  //       method: 'POST',
-  //       headers: {
-  //         'Content-Type': 'application/json'
-  //       },
-  //       body: JSON.stringify(data) // 
-  //     });
-
-  //     if (response.ok) {
-  //       console.log('User data successfully submitted.');
-  //     } else {
-  //       console.error('Failed to submit user data.');
-  //     }
-  //   } catch (error) {
-  //     console.error('Error sending data:', error);
-  //   }
-
-  //   navigate('/booking'); // Navigate to confirmation page or other route 
-  // }
-
-  const handleInputChange = (field, value) => {
-    setFormData(prevData => ({
-      ...prevData,
-      [field]: value
-    }));
+  const signIn = (e) => {
+    e.preventDefault();
+    console.log("A");
+    fetch(`http://localhost:8080/api/user/${email}/${password}`)
+      .then(response => response.json())
+      .then(result => {
+        setUserData(result);
+        setFirstName(result.firstName);
+        setLastName(result.lastName);
+        setMobileNumber(result.mobileNumber);
+        setAddress(result.address);
+        setEmailId(result.emailId);
+        setDlNo(result.dlNo);
+        setAadharNo(result.aadharNo);
+        setPassportNo(result.passportNo);
+        setCityName(result.city.cityName); // 
+        setStateName(result.state.stateName); // 
+        console.log(result);
+      });
   }
 
-  const handleCancel = () => {
-    navigate('/');
-  };
+
+  const onChangeHandler = async (event) => {
+    console.log("Change hua");
+    sessionStorage.setItem("userStateId", userData.state.stateId);
+    setStateName(userData.state.stateName);
+  }
+
+  const handelClick = async (e) => {
+    // console.log("On click");
+    e.preventDefault();
+
+    try {
+      const response = await fetch("http://localhost:8080/api/states");
+      const result = await response.json();
+      setStateList(result);
+    } catch (error) {
+      console.error('Error fetching data:', error);
+      // yaha pe use navigate use karke Error page pe send karo 
+    }
+  }
+
+
+  const onChangeHandlerCity = async (event) => {
+    console.log(" City Change hua");
+    let tempId = event.target.value;
+    sessionStorage.setItem("pickUpCityId", tempId);
+  }
+
+  const handelClickCity = async (e) => {
+    console.log("On click-> city drop down");
+
+    e.preventDefault();
+    // let temp = sessionStorage.getItem("pickUpStateId"); 
+    // console.log(temp); 
+
+    try {
+
+      console.log("A");
+      const response = await fetch("http://localhost:8080/api/cities/" + sessionStorage.getItem("userStateId"));
+      const result = await response.json();
+      setCityList(result);
+      console.log("B");
+    } catch (error) {
+      console.error('Error fetching data:', error);
+      // yaha pe use navigate use karke Error page pe send karo 
+    }
+  }
+
+  console.log(email);
+  console.log(password);
+  console.log(firstName);
 
 
   const columnStyle = {
-    border: '1px solid gray', // Add border
-    backgroundColor: 'lightgray', // Add gray background color
-    // padding: '10px', // Add padding for spacing
+    border: '1px solid gray',
+    backgroundColor: 'lightgray',
   };
 
   return (
@@ -120,91 +116,115 @@ function FillUserDetail() {
         <Row>
           <Col xs={3} style={columnStyle}>
             Login area
-            <Form>
+            <Form onSubmit={signIn}>
               <FloatingLabel controlId="floatingInput" label="Email address" className="mb-3">
-                <Form.Control type="email" placeholder="Enter email" />
+                <Form.Control type="email" placeholder="Enter email" onChange={(event) => { setEmail(event.target.value) }} />
               </FloatingLabel>
 
               <FloatingLabel controlId="floatingPassword" label="Password">
-                <Form.Control type="password" placeholder="Password" />
+                <Form.Control type="password" placeholder="Password" onChange={(event) => { setPassword(event.target.value) }} />
               </FloatingLabel>
-              <br/> 
+              <br />
 
-              <Button variant="primary" type="submit">Login</Button>
+              <Button variant="primary" type="submit">Login232</Button>
             </Form>
-
-
-
           </Col>
 
-          <Col style={columnStyle}> 
-          User details area 
+          <Col style={columnStyle}>
+            User details area
             <Form>
+              <Row className="mb-3">
+                <Form.Group as={Col} controlId="formGridFirstName">
+                  <Form.Label>First Name</Form.Label>
+                  <Form.Control type="text" placeholder="Enter First Name" value={firstName} onChange={(event) => { setFirstName(event.target.value) }} />
+                </Form.Group>
+
+                <Form.Group as={Col} controlId="formGridLastName">
+                  <Form.Label>Last Name</Form.Label>
+                  <Form.Control type="text" placeholder="Enter Last Name" value={lastName} onChange={(event) => { setLastName(event.target.value) }} />
+                </Form.Group>
+              </Row>
+
+              <Row className="mb-3">
+                <Form.Group as={Col} controlId="formGridMobileNumber">
+                  <Form.Label>Mobile Number</Form.Label>
+                  <Form.Control type="text" placeholder="Enter Mobile Number" value={mobileNumber} onChange={(event) => { setMobileNumber(event.target.value) }} />
+                </Form.Group>
+
+                <Form.Group as={Col} controlId="formGridAddress">
+                  <Form.Label>Address</Form.Label>
+                  <Form.Control type="text" placeholder="Enter Address" value={address} onChange={(event) => { setAddress(event.target.value) }} />
+                </Form.Group>
+              </Row>
+
               <Row className="mb-3">
                 <Form.Group as={Col} controlId="formGridEmail">
                   <Form.Label>Email</Form.Label>
-                  <Form.Control type="email" placeholder="Enter email" />
+                  <Form.Control type="email" placeholder="Enter Email" value={emailId} onChange={(event) => { setEmailId(event.target.value) }} />
                 </Form.Group>
 
-                <Form.Group as={Col} controlId="formGridPassword">
-                  <Form.Label>Password</Form.Label>
-                  <Form.Control type="password" placeholder="Password" />
+                <Form.Group as={Col} controlId="formGridDLNo">
+                  <Form.Label>Driver's License No</Form.Label>
+                  <Form.Control type="text" placeholder="Enter DL No" value={dlNo} onChange={(event) => { setDlNo(event.target.value) }} />
                 </Form.Group>
               </Row>
-
-              <Form.Group className="mb-3" controlId="formGridAddress1">
-                <Form.Label>Address</Form.Label>
-                <Form.Control placeholder="1234 Main St" />
-              </Form.Group>
-
-              <Form.Group className="mb-3" controlId="formGridAddress2">
-                <Form.Label>Address 2</Form.Label>
-                <Form.Control placeholder="Apartment, studio, or floor" />
-              </Form.Group>
 
               <Row className="mb-3">
-                <Form.Group as={Col} controlId="formGridCity">
-                  <Form.Label>City</Form.Label>
-                  <Form.Control />
+                <Form.Group as={Col} controlId="formGridAadharNo">
+                  <Form.Label>Aadhar No</Form.Label>
+                  <Form.Control type="text" placeholder="Enter Aadhar No" value={aadharNo} onChange={(event) => { setAadharNo(event.target.value) }} />
                 </Form.Group>
 
-                <Form.Group as={Col} controlId="formGridState">
-                  <Form.Label>State</Form.Label>
-                  <Form.Select defaultValue="Choose...">
-                    <option>Choose...</option>
-                    <option>...</option>
-                  </Form.Select>
-                </Form.Group>
-
-                <Form.Group as={Col} controlId="formGridZip">
-                  <Form.Label>Zip</Form.Label>
-                  <Form.Control />
+                <Form.Group as={Col} controlId="formGridPassportNo">
+                  <Form.Label>Passport No</Form.Label>
+                  <Form.Control type="text" placeholder="Enter Passport No" value={passportNo} onChange={(event) => { setPassportNo(event.target.value) }} />
                 </Form.Group>
               </Row>
 
-              <Form.Group className="mb-3" id="formGridCheckbox">
-                <Form.Check type="checkbox" label="Check me out" />
-              </Form.Group>
+              <Row className="mb-3">
+                <section>
+                  <Form.Select aria-label="Select State" onChange={onChangeHandler} onClick={handelClick} >
+                    <option> Select State</option>
+                    {stateList.map(state => (
+                      <option key={state.stateId} value={state.stateId} >
+                        {state.stateName}
+                      </option>
+                    ))}
+                  </Form.Select>
+                </section>
+
+                <section>
+                  <Form.Select aria-label="Select City" onChange={onChangeHandlerCity} onClick={handelClickCity} >
+                    <option> Select City</option>
+                    {cityList.map(city => (
+                      <option key={city.cityId} value={city.cityId} >
+                        {city.cityName} 
+                      </option>
+                    ))}
+                  </Form.Select>
+                </section>
+
+
+
+                {/* <Form.Group as={Col} controlId="formGridCityName">
+                  <Form.Label>City Name</Form.Label>
+                  <Form.Control type="text" placeholder="Enter City Name" value={cityName} onChange={(event) => { setCityName(event.target.value) }} />
+                </Form.Group>
+
+                <Form.Group as={Col} controlId="formGridStateName">
+                  <Form.Label>State Name</Form.Label>
+                  <Form.Control type="text" placeholder="Enter State Name" value={stateName} onChange={(event) => { setStateName(event.target.value) }} />
+                </Form.Group> */}
+              </Row>
 
               <Button variant="primary" type="submit">
                 Submit
               </Button>
             </Form>
+
           </Col>
-
         </Row>
-
-
       </Container>
-
-
-
-
-
-
-
-
-
     </div>
   );
 }
