@@ -15,7 +15,8 @@ import AddOnPage from './Compnents/Pages/AddOnPage';
 import Membership from './Compnents/Pages/Membership'; 
 import SuccessPage from './Compnents/Pages/SuccessPage'; 
 import 'bootstrap/dist/css/bootstrap.min.css'; 
-import FillUserDetail from './Compnents/Pages/FillUserDetail';
+import FillUserDetail from './Compnents/Pages/FillUserDetail'; 
+import AutocompleteDemo from './Compnents/AutocompleteDemo'; 
 
 
 function App() {
@@ -32,6 +33,7 @@ function App() {
           <Route path='categoryselector' element={<CategorySelector />} /> 
           <Route path='addonpage' element={<AddOnPage />} /> 
           <Route path='filluserdetails' element={<FillUserDetail />} /> 
+          <Route path='autocomplete' element={<AutocompleteDemo />} /> 
 
           <Route path='loginpage' element={<LoginPage />} /> 
           <Route path='membership' element={<Membership />} /> 

@@ -14,7 +14,7 @@ export default function States() {
         sessionStorage.setItem("pickUpStateId", tempId);
     }
 
-    const handelClick = async (e) => {
+    const handelClick = async (e) => { 
         // console.log("On click");
         e.preventDefault();
 

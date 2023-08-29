@@ -1,147 +1,218 @@
-import React, { useEffect, useState } from 'react';
-import axios from 'axios';
-
-function Autocomplete() {
-
-    const [countries, setCountries] = useState([]); 
-    const [states, setStates] = useState([]); 
-
-    // useEffect(() => {
-    //     async function fetchCountries() {
-    //         try {
-    //             const response = await axios.get('http://localhost:8080/api/states'); // Replace with the actual API endpoint
-    //             setCountries(response.data); // Assuming the API returns an array of country names
-    //         } catch (error) {
-    //             console.error('Error fetching countries:', error);
-    //         }
-    //     }
-
-    //     fetchCountries();
-    // }, []); 
-
-    console.log(countries);
-
-    useEffect(() => {
-
-        async function fetchCountries() {
-            try {
-                const response = await axios.get('http://localhost:8080/api/states'); // Replace with the actual API endpoint
-                setCountries(response.data); // Assuming the API returns an array of country names
-            } catch (error) {
-                console.error('Error fetching countries:', error);
-            }
-        }
-
-        fetchCountries(); 
-
-        countries.map()
+// {
+//     "firstName": "James Kumar Khan",
+//     "lastName": "Garcia",
+//     "mobileNumber": "555-444-4444",
+//     "emailId": "jaimish@example.com",
+//     "address": "707 Walnut St",
+//     "password": "password11",
+//     "dlNo": "DL44444",
+//     "aadharNo": 4444444,
+//     "passportNo": 444444,
+//     "isReigsteredUser": 1, 
+//     "isEmployee": 0, 
+//     "state": {
+//         "stateId": 21
+//     },
+//     "city": {
+//         "cityId": 2110
+//     },
+//     "bookings": []
+// }
 
 
-
-        async function fetchCountries() {
-            try {
-                const response = await axios.get('http://localhost:8080/api/states'); // Replace with the actual API endpoint
-                setCountries(response.data); // Assuming the API returns an array of country names
-            } catch (error) {
-                console.error('Error fetching countries:', error);
-            }
-        }
-
-        fetchCountries();
-
-        function autocomplete(inp, arr) {
-            var currentFocus;
-
-            inp.addEventListener("input", function (e) {
-                var a, b, i, val = this.value;
-                closeAllLists();
-                if (!val) { return false; }
-                currentFocus = -1;
-                a = document.createElement("DIV");
-                a.setAttribute("id", this.id + "autocomplete-list");
-                a.setAttribute("class", "autocomplete-items");
-                this.parentNode.appendChild(a);
-                for (i = 0; i < arr.length; i++) {
-                    if (arr[i].substr(0, val.length).toUpperCase() === val.toUpperCase()) {
-                        b = document.createElement("DIV");
-                        b.innerHTML = "<strong>" + arr[i].substr(0, val.length) + "</strong>";
-                        b.innerHTML += arr[i].substr(val.length);
-                        b.innerHTML += "<input type='hidden' value='" + arr[i] + "'>";
-                        b.addEventListener("click", function (e) {
-                            inp.value = this.getElementsByTagName("input")[0].value;
-                            closeAllLists();
-                        });
-                        a.appendChild(b);
-                    }
-                }
-            });
-
-            inp.addEventListener("keydown", function (e) {
-                var x = document.getElementById(this.id + "autocomplete-list");
-                if (x) x = x.getElementsByTagName("div");
-                if (e.keyCode === 40) {
-                    currentFocus++;
-                    addActive(x);
-                } else if (e.keyCode === 38) {
-                    currentFocus--;
-                    addActive(x);
-                } else if (e.keyCode === 13) {
-                    e.preventDefault();
-                    if (currentFocus > -1) {
-                        if (x) x[currentFocus].click();
-                    }
-                }
-            });
-
-            function addActive(x) {
-                if (!x) return false;
-                removeActive(x);
-                if (currentFocus >= x.length) currentFocus = 0;
-                if (currentFocus < 0) currentFocus = (x.length - 1);
-                x[currentFocus].classList.add("autocomplete-active");
-            }
-
-            function removeActive(x) {
-                for (var i = 0; i < x.length; i++) {
-                    x[i].classList.remove("autocomplete-active");
-                }
-            }
-
-            function closeAllLists(elmnt) {
-                var x = document.getElementsByClassName("autocomplete-items");
-                for (var i = 0; i < x.length; i++) {
-                    if (elmnt != x[i] && elmnt != inp) {
-                        x[i].parentNode.removeChild(x[i]);
-                    }
-                }
-            }
-
-            document.addEventListener("click", function (e) {
-                closeAllLists(e.target);
-            });
-        }
-
-        // var countries = [
-        //     "Afghanistan", "Albania", "Algeria", // ... (remaining countries)
-        // ];
-
-        autocomplete(document.getElementById("myInput"), countries);
-    }, []);
-
-    return (
-        <div>
-            <h2>Autocomplete</h2>
-            <p>Start typing:</p>
-
-            <form autoComplete="on"> 
-                <div className="autocomplete" style={{ width: '300px' }}>
-                    <input id="myInput" type="text" name="myCountry" placeholder="Country" />
-                </div>
-                <input type="submit" />
-            </form>
-
-        </div>
-    );
+const onChangeHandler = async (event) => {
+    console.log(" City Change hua");
+    let tempId = event.target.value; 
+    sessionStorage.setItem("pickUpCityId", tempId); 
 }
 
-export default Autocomplete;
+const handelClick = async (e) => {
+    e.preventDefault(); 
+
+    try {
+        const response = await fetch("http://localhost:8080/api/cities/"  + localStorage.getItem("userStateId")); 
+        const result = await response.json();
+        setCityList(result);  
+    } catch (error) {
+        console.error('Error fetching data:', error); 
+        // yaha pe use navigate use karke Error page pe send karo 
+    }
+}
+
+
+
+const tempData = {
+    "firstName": firstName ? firstName : '',
+    "lastName": lastName ? lastName : '',
+    "mobileNumber": mobileNumber ? mobileNumber : '',
+    "emailId": emailId ? emailId : '',
+    "dLNumber": dlNo ? dlNo : '',
+    "aadharNo": aadharNo ? aadharNo : '',
+    "passportNo": passportNo ? passportNo : '',
+    "state": {
+      "stateId": stateId
+    },
+    "city": {
+      "cityId": cityId
+    }
+  }
+
+
+
+  fetch("http://localhost:8080/api/user/add", {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(tempData) // Your request data
+  })
+    .then(response => {
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+      return response.json();
+    })
+    .then(data => {
+      // Handle the successful response data 
+      Navigate("booking"); 
+      console.log('Response:', data);
+    })
+    .catch(error => {
+      // Handle errors
+      console.error('Error:', error);
+    });
+  
+    if (isLoggedIn == false) { // then only POST in user table 
+
+        const response = await fetch('http://localhost:8080/api/user/add', { 
+          method: 'POST',
+          body: JSON.stringify(tempData),
+          headers: {
+            'Content-Type': 'application/json'
+          }
+        }); 
+        const result = await response.json(); 
+        console.log(result); 
+        navigate("booking"); 
+      }
+
+
+
+      import React from 'react';
+import Navbar from "../PageNavigation";
+import '../../Style/Booking.css'; 
+import { useState } from 'react';
+
+import { useNavigate } from 'react-router-dom';
+
+
+
+function BookingPage() {
+  const navigate = useNavigate();
+
+  const [userId, setUserId] = useState(); 
+
+  const handleCancel = () => {
+    navigate("/");
+  };
+
+  const handleConfirm = () => {
+
+    // create an object to send to Booking table 
+    fetch(`http://localhost:8080/api/user/${sessionStorage.getItem("emailId")}`) 
+        .then(response => response.json()) 
+        .then(result => {sessionStorage.setItem("userId", result.userId);  setUserId(result.userId)})
+
+
+        const data = {
+            "bookingDateAndTime": "", 
+            "firstName": sessionStorage.getItem("firstName"), 
+            "lastName": sessionStorage.getItem("lastName"), 
+            "mobileNumber": sessionStorage.getItem("mobileNumber"),
+            "emailId": sessionStorage.getItem("emailId"),
+            "dLNumber": sessionStorage.getItem("dlNo"),
+            "aadharNo": sessionStorage.getItem("aadharNo"),
+            "passportNo": sessionStorage.getItem("passpostNo"),
+            "user": {
+                "userId": userId
+            },
+            "state": {
+                "stateId": ""
+            },
+            "city": {
+                "cityId": ""
+            },
+            "pickupHub": {
+                "hubId": sessionStorage.getItem("pickupHubId")
+            },
+            "dropHub": {
+                "hubId": sessionStorage.getItem("dropHubId")
+            },
+            "category": {
+                "categoryId": sessionStorage.getItem("pickCategoryId") 
+            }
+        }
+    // Now post in Booking table 
+    fetch('http://localhost:8080/api/addbooking', {
+      method: 'POST',
+      body: JSON.stringify(data),
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    })
+
+
+    navigate("/successpage");
+}
+
+  // Retrieve selected information from session storage
+  const userData = {
+    firstName: sessionStorage.getItem('firstName'),
+    lastName: sessionStorage.getItem('lastName'),
+    emailId: sessionStorage.getItem('emailId'),
+    mobileNumber: sessionStorage.getItem('mobileNumber'),
+    address: sessionStorage.getItem('address'),
+   
+    pickUpStateId: sessionStorage.getItem('userStateId'),
+    pickUpCityId: sessionStorage.getItem('pickUpCityId'),
+    
+   
+  };
+
+ let pickcategoryName=sessionStorage.getItem('pickcategoryName');
+ let pickuphubName= sessionStorage.getItem('pickuphubName');
+ let dropHubName= sessionStorage.getItem('dropHubName');
+
+
+  return (
+    <div className='booking-page-container'>
+      <Navbar />
+      <h3 className='booking-header'>Booking Details</h3>
+      <div className='booking-card'>
+        <div className='booking-card-header'>Booking Information</div>
+        <div className='booking-card-body'>
+          <p><strong>First Name:</strong> {userData.firstName}</p>
+          <p><strong>Last Name:</strong> {userData.lastName}</p>
+          <p><strong>Email:</strong> {userData.emailId}</p>
+          <p><strong>Mobile Number:</strong> {userData.mobileNumber}</p>
+          <p><strong>Address:</strong> {userData.address}</p>
+          
+          <p><strong>Pickup hub name:</strong> {pickuphubName}</p>
+          <p><strong>Drop hub name:</strong> {dropHubName}</p>
+         
+          <p><strong>Selected Car Category:</strong> {pickcategoryName}</p>
+        </div>
+      </div>
+
+      <div className='booking-card'>
+        <div className='booking-card-body'>
+          <button className='booking-confirm-button' onClick={handleConfirm}>Confirm</button>
+          <button className='booking-confirm-button' onClick={() => { navigate("/registrationform") }}>Modify</button>
+          <button className='booking-cancel-button' onClick={handleCancel}>Cancel</button>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+export default BookingPage;
