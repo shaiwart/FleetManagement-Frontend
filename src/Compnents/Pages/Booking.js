@@ -18,12 +18,12 @@ function BookingPage() {
   const [cityName, setCityName] = useState(localStorage.getItem('cityName') || '');
   const [cityId, setCityId] = useState(localStorage.getItem('cityId') || '');
   const [stateName, setStateName] = useState(localStorage.getItem('stateName') || '');
-  const [stateId, setStateId] = useState(localStorage.getItem('stateId') || ''); 
+  const [stateId, setStateId] = useState(localStorage.getItem('stateId') || '');
   // const [userId, setUserId] = useState(); 
 
-  let pickcategoryName = sessionStorage.getItem('pickcategoryName'); 
-  let pickuphubName = sessionStorage.getItem('pickuphubName'); 
-  let dropHubName = sessionStorage.getItem('dropHubName'); 
+  let pickcategoryName = sessionStorage.getItem('pickcategoryName');
+  let pickuphubName = sessionStorage.getItem('pickuphubName');
+  let dropHubName = sessionStorage.getItem('dropHubName');
 
   const navigate = useNavigate();
 
@@ -34,20 +34,32 @@ function BookingPage() {
 
   const handleConfirm = async () => {
     console.log("helloEmail-> " + emailId);
-    
-    try {
-      const response = await fetch(`http://localhost:8080/api/user/${emailId}`);
-      const result = await response.json(); 
-      let userId = await result.userId; 
 
-  
-      console.log("helloInside-> " + result.userId);
+    try { 
+      const currentDate = new Date(); // 2023-09-22T15:30:00 // 2023-8-30T8:22:23
+      const year = currentDate.getFullYear();
+      const month = String(currentDate.getMonth() + 1).padStart(2, '0'); // Adding leading zero
+      const day = String(currentDate.getDate()).padStart(2, '0'); // Adding leading zero
+      const hours = String(currentDate.getHours()).padStart(2, '0'); // Adding leading zero
+      const minutes = String(currentDate.getMinutes()).padStart(2, '0'); // Adding leading zero
+      const seconds = String(currentDate.getSeconds()).padStart(2, '0'); // Adding leading zero 
+
+      const formattedDate = `${year}-${month}-${day}T${hours}:${minutes}:${seconds}`;
+      console.log(formattedDate);
+
+
+      const response = await fetch(`http://localhost:8080/api/user/${emailId}`);
+      const result = await response.json();
+      const userId = await result.userId; 
+
+
+      // console.log("helloInside-> " + result.userId);
       sessionStorage.setItem("userId", result.userId);
-  
+
       console.log("hello-> " + userId); 
-  
+
       const tempData = {
-        "bookingDateAndTime": "",
+        "bookingDateAndTime": formattedDate,
         "firstName": firstName,
         "lastName": lastName,
         "mobileNumber": mobileNumber,
@@ -55,27 +67,23 @@ function BookingPage() {
         "dLNumber": dlNo,
         "aadharNo": aadharNo,
         "passportNo": passportNo,
-        "user": userId,
+        "userId": userId, 
         "state": {
           "stateId": stateId
         },
         "city": {
           "cityId": cityId
         }, 
-        "pickupHub": {
-          "hubId": sessionStorage.getItem("pickupHubId") == undefined ? 0 : sessionStorage.getItem("pickupHubId")
-        },
-        "dropHub": {
-          "hubId": sessionStorage.getItem("dropHubId") == undefined ? 0 : sessionStorage.getItem("dropHubId")
-        },
+        "pickupHubId": sessionStorage.getItem("pickupHubId") == undefined ? 0 : sessionStorage.getItem("pickupHubId"),
+        "dropHubId": sessionStorage.getItem("dropHubId") == undefined ? 0 : sessionStorage.getItem("dropHubId"),
         "category": {
           "categoryId": sessionStorage.getItem("pickCategoryId") == undefined ? 0 : sessionStorage.getItem("pickCategoryId")
         }
       };
-  
-      console.log("--> TempData");
-      console.log(tempData);
-  
+
+      // console.log("--> TempData");
+      // console.log(tempData);
+
       // Now post in Booking table
       const bookingResponse = await fetch('http://localhost:8080/api/addbooking', {
         method: 'POST',
@@ -84,7 +92,7 @@ function BookingPage() {
           'Content-Type': 'application/json'
         }
       });
-  
+
       if (bookingResponse.ok) {
         console.log("Booking successfully added.");
         localStorage.clear();
@@ -98,9 +106,9 @@ function BookingPage() {
       // Handle the error scenario
     }
   };
-  
 
-  
+
+
 
 
 
@@ -121,7 +129,7 @@ function BookingPage() {
           <p><strong>Pickup hub name:</strong> {pickuphubName}</p>
           <p><strong>Drop hub name:</strong> {dropHubName}</p>
 
-          <p><strong>Selected Car Category:</strong> {pickcategoryName}</p> 
+          <p><strong>Selected Car Category:</strong> {pickcategoryName}</p>
         </div>
       </div>
 

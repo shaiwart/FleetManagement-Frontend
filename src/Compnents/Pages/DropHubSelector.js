@@ -14,8 +14,6 @@ export default function DropHubSelector(props) {
     const dropAirportId = sessionStorage.getItem("dropAirportId");
 
     const dropUpCityId = sessionStorage.getItem("dropUpCityId");
-
-    console.log("++++++++++++++++++++" + dropAirportId)
     useEffect(() => {
 
         if (dropAirportId) {
@@ -28,9 +26,6 @@ export default function DropHubSelector(props) {
         }
     }, []);
 
-
-
-    console.log("++++++++++++++++++++" + dropUpCityId)
     useEffect(() => {
         if (dropUpCityId) {
             fetch("http://localhost:8080/api/hubs/" + dropUpCityId)

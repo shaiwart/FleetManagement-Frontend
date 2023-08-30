@@ -19,18 +19,18 @@ import Button from 'react-bootstrap/Button';
 
 export default function HomePage() {
 
-    const pickupdate=((e)=>{
-        let date =e.target.value
-        sessionStorage.setItem("pickupdate",date);
+    const pickupdate = ((e) => {
+        let date = e.target.value
+        sessionStorage.setItem("pickupdate", date);
         console.log(sessionStorage.getItem("pickupdate"))
     })
-    const dropdate=((e)=>{
-        let date =e.target.value
-        sessionStorage.setItem("dropdate",date);
+    const dropdate = ((e) => {
+        let date = e.target.value
+        sessionStorage.setItem("dropdate", date);
         console.log(sessionStorage.getItem("dropdate"))
-    })
+    })
 
-    const navigate=useNavigate();
+    const navigate = useNavigate();
     const columnStyle = {
         border: '1px solid gray', // Add border
         backgroundColor: 'lightgray', // Add gray background color
@@ -42,29 +42,30 @@ export default function HomePage() {
     }
     sessionStorage.removeItem("pickUpAirportId")
     sessionStorage.removeItem("pickUpCityId")
-    sessionStorage.removeItem("pickCategoryId")
-    
+    sessionStorage.removeItem("pickCategoryId") 
+
+
     return (
         <>
             <p>hello world</p>
             <Container>
                 <Row>
-                
+
                     <Col xs={5} style={columnStyle}>
 
                         <Row style={columnStyle}>
-                        <table>
-                            <tr>
-                                <td>pickup date <input type="datetime-local" onChange={pickupdate}></input><br/></td>
-                                <td>drop date <input type="datetime-local" onChange={dropdate}></input></td>
-                            </tr>
-                        </table>
+                            <table>
+                                <tr>
+                                    <td>pickup date <input type="datetime-local" onChange={pickupdate}></input><br /></td>
+                                    <td>drop date <input type="datetime-local" onChange={dropdate}></input></td>
+                                </tr>
+                            </table>
                             Select Airport
-                            <PickupAirport /> 
+                            <PickupAirport />
 
                             Select Pick-up State and City
                             <PickupState />
-                            <PickupCity /> 
+                            <PickupCity />
                         </Row>
 
                         <Row style={columnStyle}>
@@ -76,7 +77,7 @@ export default function HomePage() {
                             <DropCity />
                         </Row>
 
-                        
+
                         <button onClick={handleClickto}>Search hub</button>
                     </Col>
 

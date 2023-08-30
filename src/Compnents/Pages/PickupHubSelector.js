@@ -12,7 +12,6 @@ export default function PickupHubSelector(props) {
 
     const pickUpAirportId = sessionStorage.getItem("pickUpAirportId");
     const pickUpCityId = sessionStorage.getItem("pickUpCityId");
-    console.log("++++++++++++++++++++" + pickUpAirportId)
     useEffect(() => {
 
         if (pickUpAirportId) {
@@ -26,8 +25,6 @@ export default function PickupHubSelector(props) {
     }, []);
 
 
-
-    console.log("++++++++++++++++++++" + pickUpCityId)
     useEffect(() => {
         if (pickUpCityId) {
             fetch("http://localhost:8080/api/hubs/" + pickUpCityId)
@@ -43,7 +40,7 @@ export default function PickupHubSelector(props) {
     console.log(hubsList)
 
     const handleHubClick = (hubId) => {
-        sessionStorage.setItem("pickuphubId", hubId);
+        sessionStorage.setItem("pickupHubId", hubId);
         navigate('/DropHubSelector');
     };
 

@@ -39,10 +39,10 @@ function FillUserDetail() {
       .then(response => response.json())
       .then(result => {
         localStorage.setItem("isLoggedIn", true);
-        setUserData(result);
+        setUserData(result); 
         localStorage.setItem("userId", result.userId); // userId-> saving in session storage // will use while POST in booking 
 
-        setFirstName(result.firstName);
+        setFirstName(result.firstName); 
         localStorage.setItem("firstName", result.firstName);
 
         setFirstName(result.firstName);
