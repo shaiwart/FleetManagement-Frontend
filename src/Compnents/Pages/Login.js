@@ -30,7 +30,7 @@ function LoginPage({ setUserData }) {
 
   return (
     <div>
-      <Navbar />
+      
       <div className="login-page-container">
 
         <div className="login-form">

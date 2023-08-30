@@ -38,7 +38,7 @@ function AddOnPage() {
  
   return (
     <div className="add-on-page">
-      <Navbar />
+      
       <h1>Add-Ons</h1>
       <table className="add-ons-table">
         <thead>

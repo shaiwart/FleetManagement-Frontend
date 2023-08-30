@@ -41,7 +41,7 @@ function CategorySelector() {
 
   return (
     <>
-      <Navbar />
+      
       <div className="vehicle-selection">
         <Row>
           {CarCategory.map((cat, index) => (

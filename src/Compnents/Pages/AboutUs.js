@@ -13,7 +13,7 @@ export default function AboutUs() {
 
     return (
         <>
-            <Navbar />
+            
             <Container>
                 <Row style={rowStyle}>
                     <div className="section">

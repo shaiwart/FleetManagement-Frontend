@@ -5,7 +5,7 @@ import '../../Style/SuccessPage.css';
 function SuccessPage() {
   return (
     <>
-      <Navbar />
+      
       <div className='confirmation-page-container'>
         <div className='confirmation-card'>
           <h1 className='confirmation-header'>Your Booking Is Confirmed</h1>

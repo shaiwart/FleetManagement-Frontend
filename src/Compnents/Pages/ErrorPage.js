@@ -4,7 +4,7 @@ import Navbar from "../PageNavigation";
 export default function ErrorPage() {
     return(
         <section>
-            <Navbar/>
+            
             <h1>404</h1>
             <h3>
                 Page not found !
