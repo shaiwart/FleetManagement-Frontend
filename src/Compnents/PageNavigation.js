@@ -9,9 +9,22 @@ import Membership from "./Pages/Membership";
 import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
+import { useState } from "react";
+import { useNavigate } from "react-router-dom"; 
 
 
-export default function PageNavigation() {
+export default function PageNavigation() { 
+    const [isUserLoggedIn, setIsUserLoggedIn] = useState( sessionStorage.getItem("isUserLoggedIn") ? 
+    sessionStorage.getItem("isUserLoggedIn") : false); 
+    const navigate = useNavigate(); 
+
+    function handleLogout() {
+        sessionStorage.clear(); 
+        navigate("/"); 
+    }
+
+    
+
     return (
         <section>
 
@@ -27,7 +40,9 @@ export default function PageNavigation() {
                             <Nav.Link href="contact">Customer Care</Nav.Link>
                         </Nav>
                         <Nav>
-                            <Nav.Link href="loginpage" className='login-button'>Login</Nav.Link>
+                             
+                            {isUserLoggedIn ? <Nav.Link onClick={handleLogout} className='login-button'>Logout</Nav.Link> : 
+                            <Nav.Link href="userlogin" className='login-button'>Login</Nav.Link>} 
 
                         </Nav>
                     </Navbar.Collapse>

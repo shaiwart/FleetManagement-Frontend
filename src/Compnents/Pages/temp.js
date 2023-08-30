@@ -216,3 +216,30 @@ function BookingPage() {
 }
 
 export default BookingPage;
+
+
+
+response.json()
+console.log(response); 
+console.log("length-> " + response.headers.get("content-length")); 
+
+fetch(`http://localhost:8080/api/user/${uname.value}/${pass.value}`) 
+// .then() // check if null is coming 
+// .then(response => {console.log(response);})
+.then((response) => {
+    if (response.status === 200 && response.headers.get("content-length") === "0") {
+        console.log("username / password mismatch");
+        setErrorMessages({ name: "pass", message: errors.pass });
+        throw new Error("Empty response"); 
+    }
+    return response.json(); 
+})
+.then((result) => {
+    setIsSubmitted(true);
+    console.log("submitted & got reply");
+    // Process the result here
+})
+.catch(error => {
+    console.error("Error during fetch:", error);
+    // Handle any errors that occurred during the fetch
+});

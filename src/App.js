@@ -7,7 +7,6 @@ import ContactUs from './Compnents/Pages/ContactUs';
 import ErrorPage from './Compnents/Pages/ErrorPage'; 
 import PickupHubSelector from './Compnents/Pages/PickupHubSelector';
 import DropHubSelector from './Compnents/Pages/DropHubSelector';
-import LoginPage from './Compnents/Pages/Login';
 import RegistrationForm from './Compnents/Pages/FillUserDetail';
 import Booking from './Compnents/Pages/Booking'; 
 import CategorySelector from './Compnents/Pages/CategorySelector'; 
@@ -16,7 +15,7 @@ import Membership from './Compnents/Pages/Membership';
 import SuccessPage from './Compnents/Pages/SuccessPage'; 
 import 'bootstrap/dist/css/bootstrap.min.css'; 
 import FillUserDetail from './Compnents/Pages/FillUserDetail'; 
-import AutocompleteDemo from './Compnents/AutocompleteDemo'; 
+import UserLogin from './Compnents/Pages/UserLogin'; 
 
 
 function App() {
@@ -32,10 +31,8 @@ function App() {
           <Route path='DropHubSelector' element={<DropHubSelector />} /> 
           <Route path='categoryselector' element={<CategorySelector />} /> 
           <Route path='addonpage' element={<AddOnPage />} /> 
-          <Route path='filluserdetails' element={<FillUserDetail />} /> 
-          <Route path='autocomplete' element={<AutocompleteDemo />} /> 
-
-          <Route path='loginpage' element={<LoginPage />} /> 
+          <Route path='filluserdetails' element={<FillUserDetail />} />  
+          <Route path='userlogin' element={<UserLogin />} /> 
           <Route path='membership' element={<Membership />} /> 
           <Route path='registrationform' element={<RegistrationForm />} /> 
           <Route path='booking' element={<Booking  />} /> 

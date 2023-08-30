@@ -10,7 +10,8 @@ import Form from 'react-bootstrap/Form';
 import FloatingLabel from 'react-bootstrap/FloatingLabel';
 
 function FillUserDetail() {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(sessionStorage.getItem("isUserLoggedIn") ? 
+  sessionStorage.getItem("isUserLoggedIn") : false);
   const [stateList, setStateList] = useState([]);
   const [cityList, setCityList] = useState([]);
 
@@ -19,18 +20,42 @@ function FillUserDetail() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
-  const [firstName, setFirstName] = useState('');
-  const [lastName, setLastName] = useState('');
-  const [mobileNumber, setMobileNumber] = useState('');
-  const [address, setAddress] = useState('');
-  const [emailId, setEmailId] = useState('');
-  const [dlNo, setDlNo] = useState('');
-  const [aadharNo, setAadharNo] = useState('');
-  const [passportNo, setPassportNo] = useState('');
-  const [cityName, setCityName] = useState('');
-  const [cityId, setCityId] = useState('');
-  const [stateName, setStateName] = useState('');
-  const [stateId, setStateId] = useState('');
+  const [firstName, setFirstName] = useState(
+    sessionStorage.getItem("firstName") ? sessionStorage.getItem("firstName") : '');
+  const [lastName, setLastName] = useState(
+    sessionStorage.getItem("lastName") ? sessionStorage.getItem("lastName") : ''
+  );
+  const [mobileNumber, setMobileNumber] = useState(
+    sessionStorage.getItem("mobileNumber") ? sessionStorage.getItem("mobileNumber") : ''
+  );
+  const [address, setAddress] = useState(
+    sessionStorage.getItem("address") ? sessionStorage.getItem("address") : ''
+  );
+  const [emailId, setEmailId] = useState(
+    sessionStorage.getItem("emailId") ? sessionStorage.getItem("emailId") : ''
+  );
+  const [dlNo, setDlNo] = useState(
+    sessionStorage.getItem("dlNo") ? sessionStorage.getItem("dlNo") : ''
+  );
+  const [aadharNo, setAadharNo] = useState(
+    sessionStorage.getItem("aadharNo") ? sessionStorage.getItem("aadharNo") : ''
+  );
+  const [passportNo, setPassportNo] = useState(
+    sessionStorage.getItem("passportNo") ? sessionStorage.getItem("passportNo") : ''
+  );
+  const [cityName, setCityName] = useState(
+    sessionStorage.getItem("userCityName") ? sessionStorage.getItem("userCityName") : ''
+  );
+  const [cityId, setCityId] = useState(
+    sessionStorage.getItem("userCityId") ? sessionStorage.getItem("userCityId") : ''
+  );
+  const [stateName, setStateName] = useState(
+    sessionStorage.getItem("userStateName") ? sessionStorage.getItem("userStateName") : ''
+  );
+  const [stateId, setStateId] = useState(
+    sessionStorage.getItem("userStateId") ? sessionStorage.getItem("userStateId") : '' 
+  );
+
 
   const signIn = (e) => {
     e.preventDefault();
@@ -38,11 +63,11 @@ function FillUserDetail() {
     fetch(`http://localhost:8080/api/user/${email}/${password}`)
       .then(response => response.json())
       .then(result => {
-        localStorage.setItem("isLoggedIn", true);
-        setUserData(result); 
+        sessionStorage.setItem("isUserLoggedIn", true);
+        setUserData(result);
         localStorage.setItem("userId", result.userId); // userId-> saving in session storage // will use while POST in booking 
 
-        setFirstName(result.firstName); 
+        setFirstName(result.firstName);
         localStorage.setItem("firstName", result.firstName);
 
         setFirstName(result.firstName);
@@ -77,7 +102,7 @@ function FillUserDetail() {
 
         console.log(result);
       })
-      .then(setIsLoggedIn(true))
+      .then(setIsLoggedIn(true)) 
       .catch(() => { console.log("Failed to fetch data"); navigate("errorpage") });
 
 
@@ -119,7 +144,7 @@ function FillUserDetail() {
     localStorage.setItem("cityName", cityName);
     localStorage.setItem("cityId", cityId);
     localStorage.setItem("stateName", stateName);
-    localStorage.setItem("stateId", stateId); 
+    localStorage.setItem("stateId", stateId);
 
 
     if (isLoggedIn == false) { // then only POST in user table 

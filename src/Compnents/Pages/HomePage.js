@@ -1,8 +1,8 @@
 import Cities from "../PickupCity";
-import Navbar from "../PageNavigation";
+import Navbar from "../PageNavigation"; 
 import HubSelector from "./PickupHubSelector";
 import { Link, useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
@@ -17,7 +17,7 @@ import DropAirport from "../DropAirport";
 import Button from 'react-bootstrap/Button';
 
 
-export default function HomePage() {
+export default function HomePage() {  
 
     const pickupdate = ((e) => {
         let date = e.target.value
@@ -30,7 +30,8 @@ export default function HomePage() {
         console.log(sessionStorage.getItem("dropdate"))
     })
 
-    const navigate = useNavigate();
+    const navigate = useNavigate(); 
+    
     const columnStyle = {
         border: '1px solid gray', // Add border
         backgroundColor: 'lightgray', // Add gray background color
@@ -47,7 +48,7 @@ export default function HomePage() {
 
     return (
         <>
-            <p>hello world</p>
+            <Navbar/> 
             <Container>
                 <Row>
 

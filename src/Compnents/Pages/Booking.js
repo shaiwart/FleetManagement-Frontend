@@ -7,18 +7,18 @@ import { useNavigate } from 'react-router-dom';
 
 
 function BookingPage() {
-  const [firstName, setFirstName] = useState(localStorage.getItem('firstName') || '');
-  const [lastName, setLastName] = useState(localStorage.getItem('lastName') || '');
-  const [mobileNumber, setMobileNumber] = useState(localStorage.getItem('mobileNumber') || '');
-  const [address, setAddress] = useState(localStorage.getItem('address') || '');
-  const [emailId, setEmailId] = useState(localStorage.getItem('emailId') || '');
-  const [dlNo, setDlNo] = useState(localStorage.getItem('dlNo') || '');
-  const [aadharNo, setAadharNo] = useState(localStorage.getItem('aadharNo') || '');
-  const [passportNo, setPassportNo] = useState(localStorage.getItem('passportNo') || '');
-  const [cityName, setCityName] = useState(localStorage.getItem('cityName') || '');
-  const [cityId, setCityId] = useState(localStorage.getItem('cityId') || '');
-  const [stateName, setStateName] = useState(localStorage.getItem('stateName') || '');
-  const [stateId, setStateId] = useState(localStorage.getItem('stateId') || '');
+  const [firstName, setFirstName] = useState(sessionStorage.getItem('firstName') || '');
+  const [lastName, setLastName] = useState(sessionStorage.getItem('lastName') || '');
+  const [mobileNumber, setMobileNumber] = useState(sessionStorage.getItem('mobileNumber') || '');
+  const [address, setAddress] = useState(sessionStorage.getItem('address') || '');
+  const [emailId, setEmailId] = useState(sessionStorage.getItem('emailId') || '');
+  const [dlNo, setDlNo] = useState(sessionStorage.getItem('dlNo') || '');
+  const [aadharNo, setAadharNo] = useState(sessionStorage.getItem('aadharNo') || '');
+  const [passportNo, setPassportNo] = useState(sessionStorage.getItem('passportNo') || '');
+  const [cityName, setCityName] = useState(sessionStorage.getItem('userCityName') || '');
+  const [cityId, setCityId] = useState(sessionStorage.getItem('userCityId') || '');
+  const [stateName, setStateName] = useState(sessionStorage.getItem('userStateName') || '');
+  const [stateId, setStateId] = useState(sessionStorage.getItem('userStateId') || ''); 
   // const [userId, setUserId] = useState(); 
 
   let pickcategoryName = sessionStorage.getItem('pickcategoryName');
@@ -95,7 +95,7 @@ function BookingPage() {
 
       if (bookingResponse.ok) {
         console.log("Booking successfully added.");
-        localStorage.clear();
+        localStorage.clear(); 
         navigate("/successpage");
       } else {
         console.log("Error while adding booking.");

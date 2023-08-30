@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import Navbar from "../PageNavigation";
 import { Link, useNavigate } from 'react-router-dom';
 import RegistrationForm from './FillUserDetail';
-import '../../Style/LoginPage.css';
+import '../../Style/LoginPage.css'; 
 
 function LoginPage({ setUserData }) {
   const [email, setEmail] = useState('');
@@ -51,8 +51,7 @@ function LoginPage({ setUserData }) {
         </div>
 
         <div className="buttons">
-          <button className="register-button">Register User</button> 
-          <button className="direct-booking-button"><Link to='/registrationform' element={< RegistrationForm />}> Direct Booking </Link></button>
+          <button className="register-button">Become a member</button>  
         </div>
       </div>
 
