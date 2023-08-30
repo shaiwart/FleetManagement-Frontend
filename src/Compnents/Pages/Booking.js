@@ -115,7 +115,7 @@ function BookingPage() {
 
   return (
     <div className='booking-page-container'>
-      
+      <Navbar />
       <h3 className='booking-header'>Booking Details</h3>
       <div className='booking-card'>
         <div className='booking-card-header'>Booking Information</div>

@@ -31,7 +31,7 @@ export default function HomePage() {
     })
 
     const navigate = useNavigate(); 
-
+    
     const columnStyle = {
         border: '1px solid gray', // Add border
         backgroundColor: 'lightgray', // Add gray background color
@@ -48,7 +48,7 @@ export default function HomePage() {
 
     return (
         <>
-            
+            <Navbar/> 
             <Container>
                 <Row>
 
@@ -85,8 +85,6 @@ export default function HomePage() {
                     <Col style={columnStyle}>Car images</Col>
 
                 </Row>
-
-
             </Container>
         </>
     );

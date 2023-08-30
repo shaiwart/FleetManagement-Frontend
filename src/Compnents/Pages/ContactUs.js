@@ -13,7 +13,7 @@ export default function ContactUs() {
     };
     return (
         <>
-            
+            <Navbar />
             <Container>
                 <Row style={rowStyle}> 
                     <div >

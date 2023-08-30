@@ -46,7 +46,7 @@ export default function PickupHubSelector(props) {
 
     return (
         <section className="section">
-            
+            <Navbar />
             <div className="location-selector">
                 <h2>Location Selection</h2>
                 <p>Select a Pick-up hub location.</p>

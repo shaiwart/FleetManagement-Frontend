@@ -10,28 +10,40 @@ import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import { useState } from "react";
-import { useNavigate } from "react-router-dom"; 
+import { useNavigate } from "react-router-dom";
+import UserLogin from "./Pages/UserLogin";
 
 
-export default function PageNavigation() { 
-    const [isUserLoggedIn, setIsUserLoggedIn] = useState( sessionStorage.getItem("isUserLoggedIn") ? 
-    sessionStorage.getItem("isUserLoggedIn") : false); 
-    const navigate = useNavigate(); 
+export default function PageNavigation() {
+    const [isUserLoggedIn, setIsUserLoggedIn] = useState(sessionStorage.getItem("isUserLoggedIn") ?
+        sessionStorage.getItem("isUserLoggedIn") : false);
+    const navigate = useNavigate();
 
     function handleLogout() {
-        sessionStorage.clear(); 
-        navigate("/"); 
+        sessionStorage.clear();
+        navigate("/");
     }
 
-    
+
 
     return (
         <section>
+
+            {/* <nav className="navbarX" >
+                <Link to='/' element={<Home />}> INDIA DRIVE </Link>
+                <Link to='about' element={<AboutUs />}> About </Link>
+                <Link to='contact' element={<ContactUs />}> Contact </Link>
+                <Link to='products' element={< AboutUs />}> Products </Link>
+
+                {isUserLoggedIn ? <Link to='userlogin' element={< UserLogin />} onClick={handleLogout} > Logout </Link> :
+                    <Link to='userlogin' element={< UserLogin />}> Login </Link>}
+            </nav> */}
 
             <Navbar collapseOnSelect expand="lg" className="custom-navbar">
                 <Container>
                     <Navbar.Brand href="/" className='logoname'>INDIA DRIVE</Navbar.Brand>
                     <Navbar.Toggle aria-controls="responsive-navbar-nav" />
+
                     <Navbar.Collapse id="responsive-navbar-nav">
                         <Nav className="me-auto">
                             <Nav.Link href="Modify">Modify/Cancel Booking</Nav.Link>
@@ -40,9 +52,9 @@ export default function PageNavigation() {
                             <Nav.Link href="contact">Customer Care</Nav.Link>
                         </Nav>
                         <Nav>
-                             
-                            {isUserLoggedIn ? <Nav.Link onClick={handleLogout} className='login-button'>Logout</Nav.Link> : 
-                            <Nav.Link href="userlogin" className='login-button'>Login</Nav.Link>} 
+
+                            {isUserLoggedIn ? <Nav.Link onClick={handleLogout} className='login-button'>Logout</Nav.Link> :
+                                <Nav.Link href="userlogin" className='login-button'>Login</Nav.Link>}
 
                         </Nav>
                     </Navbar.Collapse>
@@ -66,5 +78,5 @@ export default function PageNavigation() {
 <Link to='/loginpage' element={< LoginPage />}> Login </Link>
 </nav> */}
 
-{/* <Link to='/booking' element={< Booking />}> Booking </Link>  */}
-{/* <Link to='/registrationform' element={< RegistrationForm />}> RegistrationForm </Link>  */}
+{/* <Link to='/booking' element={< Booking />}> Booking </Link>  */ }
+{/* <Link to='/registrationform' element={< RegistrationForm />}> RegistrationForm </Link>  */ }

@@ -47,7 +47,7 @@ export default function DropHubSelector(props) {
 
     return (
         <section className="section">
-            
+            <Navbar />
             <div className="location-selector">
                 <h2>Location Selection</h2>
                 <p>Select a drop hub location.</p>

@@ -93,7 +93,7 @@ function Membership({userData, setUserData}) {
 
   return (
     <div>
-      
+      <Navbar/>
       <h3>Registration Form</h3> 
       <form className='form' onSubmit={handleSubmit}>
         {Object.keys(localUserData).map((field, index) => (

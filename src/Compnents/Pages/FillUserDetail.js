@@ -234,7 +234,7 @@ function FillUserDetail() {
 
   return (
     <div>
-      
+      <Navbar />
       <h3 className='welcome-message'>Enter your details</h3>
       <Container>
         <Row>
