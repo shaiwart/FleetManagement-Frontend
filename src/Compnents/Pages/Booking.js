@@ -2,7 +2,6 @@ import React from 'react';
 import Navbar from "../PageNavigation";
 import '../../Style/Booking.css';
 import { useState } from 'react';
-
 import { useNavigate } from 'react-router-dom';
 
 
@@ -62,16 +61,16 @@ function BookingPage() {
         },
         "city": {
           "cityId": cityId
+        }, 
+        "pickupHub": {
+          "hubId": sessionStorage.getItem("pickupHubId") == undefined ? 0 : sessionStorage.getItem("pickupHubId")
+        },
+        "dropHub": {
+          "hubId": sessionStorage.getItem("dropHubId") == undefined ? 0 : sessionStorage.getItem("dropHubId")
+        },
+        "category": {
+          "categoryId": sessionStorage.getItem("pickCategoryId") == undefined ? 0 : sessionStorage.getItem("pickCategoryId")
         }
-        // "pickupHub": {
-        //   "hubId": sessionStorage.getItem("pickupHubId")
-        // },
-        // "dropHub": {
-        //   "hubId": sessionStorage.getItem("dropHubId")
-        // },
-        // "category": {
-        //   "categoryId": sessionStorage.getItem("pickCategoryId")
-        // }
       };
   
       console.log("--> TempData");
