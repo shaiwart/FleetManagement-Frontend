@@ -16,6 +16,9 @@ import SuccessPage from './Compnents/Pages/SuccessPage';
 import 'bootstrap/dist/css/bootstrap.min.css'; 
 import FillUserDetail from './Compnents/Pages/FillUserDetail'; 
 import UserLogin from './Compnents/Pages/UserLogin'; 
+import EmployeeLogin from './Compnents/Pages/EmployeeLogin';
+import Handover from './Compnents/Pages/Handover';
+import Return from './Compnents/Pages/Return';
 
 
 function App() {
@@ -34,6 +37,9 @@ function App() {
           <Route path='addonpage' element={<AddOnPage />} /> 
           <Route path='filluserdetails' element={<FillUserDetail />} />  
           <Route path='userlogin' element={<UserLogin />} /> 
+          <Route path='employeelogin' element={<EmployeeLogin />} /> 
+          <Route path='handover' element={<Handover />} /> 
+          <Route path='return' element={<Return />} /> 
           <Route path='membership' element={<Membership />} /> 
           <Route path='registrationform' element={<RegistrationForm />} /> 
           <Route path='booking' element={<Booking  />} /> 

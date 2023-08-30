@@ -12,6 +12,7 @@ import Navbar from 'react-bootstrap/Navbar';
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import UserLogin from "./Pages/UserLogin";
+import { Row } from "react-bootstrap";
 
 
 export default function PageNavigation() {
@@ -23,6 +24,13 @@ export default function PageNavigation() {
         sessionStorage.clear();
         navigate("/");
     }
+
+    const renderEmployeeOptions = (
+        <section>
+            <Nav.Link href="handover">Handover</Nav.Link>
+            <Nav.Link href="return">Return</Nav.Link>
+        </section>
+    );
 
 
 
@@ -41,23 +49,29 @@ export default function PageNavigation() {
 
             <Navbar collapseOnSelect expand="lg" className="custom-navbar">
                 <Container>
-                    <Navbar.Brand href="/" className='logoname'>INDIA DRIVE</Navbar.Brand>
-                    <Navbar.Toggle aria-controls="responsive-navbar-nav" />
+                    <Row>
+                        <Navbar.Brand href="/" className='logoname'>INDIA DRIVE</Navbar.Brand>
+                        <Navbar.Toggle aria-controls="responsive-navbar-nav" />
 
-                    <Navbar.Collapse id="responsive-navbar-nav">
-                        <Nav className="me-auto">
-                            <Nav.Link href="Modify">Modify/Cancel Booking</Nav.Link>
-                            <Nav.Link href="membership">Membership Registration</Nav.Link>
-                            <Nav.Link href="about">About IndiaDrive</Nav.Link>
-                            <Nav.Link href="contact">Customer Care</Nav.Link>
-                        </Nav>
-                        <Nav>
+                        <Navbar.Collapse id="responsive-navbar-nav">
+                            <Nav className="me-auto">
+                                <Nav.Link href="Modify">Modify/Cancel Booking</Nav.Link>
+                                <Nav.Link href="membership">Membership Registration</Nav.Link>
+                                <Nav.Link href="about">About IndiaDrive</Nav.Link>
+                                <Nav.Link href="contact">Customer Care</Nav.Link>
+                            </Nav>
+                            <Nav>
+                                {isUserLoggedIn ? <Nav.Link onClick={handleLogout} className='login-button'>Logout</Nav.Link> :
+                                    <Nav.Link href="userlogin" className='login-button'>Login</Nav.Link>}
+                            </Nav>
+                        </Navbar.Collapse>
+                    </Row>
 
-                            {isUserLoggedIn ? <Nav.Link onClick={handleLogout} className='login-button'>Logout</Nav.Link> :
-                                <Nav.Link href="userlogin" className='login-button'>Login</Nav.Link>}
+                    {sessionStorage.getItem("isEmployeeLoggedIn") ? 
+                    <Row>
+                        <section>{renderEmployeeOptions}</section> 
+                    </Row> : <></>}
 
-                        </Nav>
-                    </Navbar.Collapse>
                 </Container>
             </Navbar>
         </section>

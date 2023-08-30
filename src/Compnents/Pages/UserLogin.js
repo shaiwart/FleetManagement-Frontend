@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import ReactDOM from "react-dom";
 import PageNavigation from "../PageNavigation";
 import { useNavigate } from "react-router-dom"; 
+import { Button } from "react-bootstrap"; 
 
 import "../../Style/UserLogin.css";
 
@@ -71,7 +72,11 @@ function UserLogin() {
                 console.error("Error during fetch:", error);
                 // Handle any errors that occurred during the fetch
             });
-    };
+    }; 
+
+    const handelButton = ()=> {
+        navigate("/employeelogin"); 
+    }
 
 
     // Generate JSX code for error message
@@ -95,9 +100,10 @@ function UserLogin() {
                     {renderErrorMessage("pass")}
                 </div>
                 <div className="button-container">
-                    <input type="submit" />
+                    <input type="submit" value={"Login"}/>  
                 </div>
-            </form>
+            </form> 
+            <Button onClick={handelButton}>Login as Staff</Button> 
         </div>
     );
 
@@ -107,7 +113,7 @@ function UserLogin() {
             <div className="app">
 
                 <div className="login-form">
-                    <div className="title">Sign In</div>
+                    <div className="title">User Login</div> 
                     {renderForm} 
                 </div>
             </div>
