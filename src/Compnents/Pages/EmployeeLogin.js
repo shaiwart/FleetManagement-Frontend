@@ -20,7 +20,6 @@ function EmployeeLogin() {
     const handleSubmit = async (event) => {
         //Prevent page reload
         event.preventDefault();
-        sessionStorage.setItem("isEmployeeLoggedIn", true); 
 
         var { uname, pass } = document.forms[0];
 
@@ -29,7 +28,7 @@ function EmployeeLogin() {
         console.log(pass.value); 
 
 
-        fetch("http://localhost:8080/api/user/login", {
+        fetch("http://localhost:8080/api/employee/login", {
             method: "POST",
             body: JSON.stringify({
                 email: uname.value,
