@@ -18,6 +18,10 @@ import { Row } from "react-bootstrap";
 export default function PageNavigation() {
     const [isUserLoggedIn, setIsUserLoggedIn] = useState(sessionStorage.getItem("isUserLoggedIn") ?
         sessionStorage.getItem("isUserLoggedIn") : false);
+
+    const [isEmployeeLoggedIn, setIsEmployeeLoggedIn] = useState(sessionStorage.getItem("isEmployeeLoggedIn") ?
+        sessionStorage.getItem("isEmployeeLoggedIn") : false);
+
     const navigate = useNavigate();
 
     function handleLogout() {
@@ -61,16 +65,16 @@ export default function PageNavigation() {
                                 <Nav.Link href="contact">Customer Care</Nav.Link>
                             </Nav>
                             <Nav>
-                                {isUserLoggedIn ? <Nav.Link onClick={handleLogout} className='login-button'>Logout</Nav.Link> :
+                                {isUserLoggedIn || isEmployeeLoggedIn ? <Nav.Link onClick={handleLogout} className='login-button'>Logout</Nav.Link> :
                                     <Nav.Link href="userlogin" className='login-button'>Login</Nav.Link>}
                             </Nav>
                         </Navbar.Collapse>
                     </Row>
 
-                    {sessionStorage.getItem("isEmployeeLoggedIn") ? 
-                    <Row>
-                        <section>{renderEmployeeOptions}</section> 
-                    </Row> : <></>}
+                    {sessionStorage.getItem("isEmployeeLoggedIn") ?
+                        <Row>
+                            <section>{renderEmployeeOptions}</section>
+                        </Row> : <></>}
 
                 </Container>
             </Navbar>

@@ -11,7 +11,8 @@ function HandOver() {
     const [phoneNumber, setPhoneNumber] = useState('');
     const [emailId, setEmailId] = useState('');
     const [booking, setBooking] = useState(null);
-    const [carList, setCarList] = useState([]);
+    const [carList, setCarList] = useState([]); 
+    const [selectedCar, setSelectedCar] = useState(); 
 
 
 
@@ -28,7 +29,7 @@ function HandOver() {
 
     const handleCar = async () => {
         try {
-            console.log("yaha aaya"); 
+            console.log("yaha aaya");
             const response = await fetch(`http://localhost:8080/api/cars/${booking.pickupHubId}/${booking.category.categoryId}`);
             const result = await response.json();
             setCarList(result);
@@ -38,13 +39,21 @@ function HandOver() {
     }
 
 
+    const handleCarSelection = (selectedCar) => {
+        // Perform your desired task using the selected car
+        console.log("Selected car:", selectedCar); 
+        setSelectedCar(selectedCar.carId); 
+        sessionStorage.setItem("selectedCar", selectedCar.carId); 
+        // Add your logic here
+    };
+
+
 
     return (
         <div>
             <Navbar />
             <div className="booking-details-container">
                 <h3>Booking Details</h3>
-
                 <div className="input-fields">
                     <input
                         type="text"
@@ -56,7 +65,6 @@ function HandOver() {
                         Fetch by Email ID
                     </Button>
                 </div>
-
                 {booking && (
                     <div className="booking-table">
                         <Table striped bordered>
@@ -69,7 +77,6 @@ function HandOver() {
                                     <th>Last Name</th>
                                     <th>Driving License number</th>
                                     <th>Car category selected</th>
-                                    {/* Add more table headers here */}
                                 </tr>
                             </thead>
                             <tbody>
@@ -81,25 +88,41 @@ function HandOver() {
                                     <td>{booking.lastName}</td>
                                     <td>{booking.dLNumber}</td>
                                     <td>{sessionStorage.getItem('pickcategoryName')}</td>
-                                    {/* Add more table data here */}
                                 </tr>
-                                {/* Add more rows for other booking data */}
                             </tbody>
                         </Table>
                         <Button variant="primary" onClick={handleCar}>
                             Assign Car
                         </Button>
-                        {/* generate cars dynamically from carList */}
                         {carList.length > 0 && (
                             <div className="car-list">
                                 <h4>Available Cars:</h4>
-                                <ul>
-                                    {carList.map(car => (
-                                        <li key={car.carId}>
-                                            {car.carName} - {car.carNumberplate}
-                                        </li>
-                                    ))}
-                                </ul>
+                                <Table striped bordered>
+                                    <thead>
+                                        <tr>
+                                            <th>Car Name</th>
+                                            <th>Car Numberplate</th>
+                                            <th>Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {carList.map(car => (
+                                            <tr key={car.carId}>
+                                                <td>{car.carName}</td>
+                                                <td>{car.carNumberplate}</td>
+                                                <td>
+                                                    <Button
+                                                        variant="secondary"
+                                                        onClick={() => handleCarSelection(car)}
+                                                        className="select-button"
+                                                    >
+                                                        Select
+                                                    </Button>
+                                                </td>
+                                            </tr>
+                                        ))}
+                                    </tbody>
+                                </Table>
                             </div>
                         )}
                     </div>
