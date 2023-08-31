@@ -96,7 +96,7 @@ function BookingPage() {
       if (bookingResponse.ok) {
         console.log("Booking successfully added.");
         localStorage.clear(); 
-        navigate("/successpage");
+        navigate("/successpage"); 
       } else {
         console.log("Error while adding booking.");
         // Handle the error scenario

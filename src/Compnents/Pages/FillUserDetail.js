@@ -10,8 +10,8 @@ import Form from 'react-bootstrap/Form';
 import FloatingLabel from 'react-bootstrap/FloatingLabel';
 
 function FillUserDetail() {
-  const [isLoggedIn, setIsLoggedIn] = useState(sessionStorage.getItem("isUserLoggedIn") ? 
-  sessionStorage.getItem("isUserLoggedIn") : false);
+  const [isLoggedIn, setIsLoggedIn] = useState(sessionStorage.getItem("isUserLoggedIn") ?
+    sessionStorage.getItem("isUserLoggedIn") : false);
   const [stateList, setStateList] = useState([]);
   const [cityList, setCityList] = useState([]);
 
@@ -53,7 +53,7 @@ function FillUserDetail() {
     sessionStorage.getItem("userStateName") ? sessionStorage.getItem("userStateName") : ''
   );
   const [stateId, setStateId] = useState(
-    sessionStorage.getItem("userStateId") ? sessionStorage.getItem("userStateId") : '' 
+    sessionStorage.getItem("userStateId") ? sessionStorage.getItem("userStateId") : ''
   );
 
 
@@ -65,44 +65,48 @@ function FillUserDetail() {
       .then(result => {
         sessionStorage.setItem("isUserLoggedIn", true);
         setUserData(result);
-        localStorage.setItem("userId", result.userId); // userId-> saving in session storage // will use while POST in booking 
+        sessionStorage.setItem("userId", result.userId);
 
         setFirstName(result.firstName);
-        localStorage.setItem("firstName", result.firstName);
-
-        setFirstName(result.firstName);
-        localStorage.setItem("firstName", result.firstName);
+        sessionStorage.setItem("firstName", result.firstName);
 
         setLastName(result.lastName);
-        localStorage.setItem("lastName", result.lastName);
+        sessionStorage.setItem("lastName", result.lastName);
 
         setMobileNumber(result.mobileNumber);
-        localStorage.setItem("mobileNumber", result.mobileNumber);
+        sessionStorage.setItem("mobileNumber", result.mobileNumber);
 
         setAddress(result.address);
-        localStorage.setItem("address", result.address);
+        sessionStorage.setItem("address", result.address);
 
         setEmailId(result.emailId);
-        localStorage.setItem("emailId", result.emailId);
+        sessionStorage.setItem("emailId", result.emailId);
 
         setDlNo(result.dlNo);
-        localStorage.setItem("dlNo", result.dlNo);
+        sessionStorage.setItem("dlNo", result.dlNo);
 
         setAadharNo(result.aadharNo);
-        localStorage.setItem("aadharNo", result.aadharNo);
+        sessionStorage.setItem("aadharNo", result.aadharNo);
 
         setPassportNo(result.passportNo);
-        localStorage.setItem("passportNo", result.passportNo);
+        sessionStorage.setItem("passportNo", result.passportNo);
 
         setCityName(result.city.cityName);
+        sessionStorage.setItem("userCityName", result.city.cityName);
+
         setCityId(result.city.cityId);
+        sessionStorage.setItem("userCityId", result.city.cityId);
 
         setStateName(result.state.stateName);
+        sessionStorage.setItem("userStateName", result.state.stateName);
+
         setStateId(result.state.stateId);
+        sessionStorage.setItem("userStateId", result.state.stateId);
+
 
         console.log(result);
       })
-      .then(setIsLoggedIn(true)) 
+      .then(setIsLoggedIn(true))
       .catch(() => { console.log("Failed to fetch data"); navigate("errorpage") });
 
 
@@ -133,18 +137,19 @@ function FillUserDetail() {
 
     console.log(tempData);
 
-    localStorage.setItem("firstName", firstName);
-    localStorage.setItem("lastName", lastName);
-    localStorage.setItem("mobileNumber", mobileNumber);
-    localStorage.setItem("address", address);
-    localStorage.setItem("emailId", emailId);
-    localStorage.setItem("dlNo", dlNo);
-    localStorage.setItem("aadharNo", aadharNo);
-    localStorage.setItem("passportNo", passportNo);
-    localStorage.setItem("cityName", cityName);
-    localStorage.setItem("cityId", cityId);
-    localStorage.setItem("stateName", stateName);
-    localStorage.setItem("stateId", stateId);
+    sessionStorage.setItem("firstName", firstName);
+    sessionStorage.setItem("lastName", lastName);
+    sessionStorage.setItem("mobileNumber", mobileNumber);
+    sessionStorage.setItem("address", address);
+    sessionStorage.setItem("emailId", emailId);
+    sessionStorage.setItem("dlNo", dlNo);
+    sessionStorage.setItem("aadharNo", aadharNo);
+    sessionStorage.setItem("passportNo", passportNo);
+    sessionStorage.setItem("userCityName", cityName);
+    sessionStorage.setItem("userCityId", cityId);
+    sessionStorage.setItem("userStateName", stateName);
+    sessionStorage.setItem("userStateId", stateId);
+
 
 
     if (isLoggedIn == false) { // then only POST in user table 
@@ -182,7 +187,7 @@ function FillUserDetail() {
   const onChangeHandlerState = (event) => {
     let tempId = event.target.value;
     setStateId(tempId);
-    localStorage.setItem("userStateId", tempId);
+    sessionStorage.setItem("userStateId", tempId);
   }
   const handelClickState = async (e) => {
     e.preventDefault();
@@ -201,14 +206,14 @@ function FillUserDetail() {
   const onChangeHandlerCity = (event) => {
     let tempId = event.target.value;
     setCityId(tempId);
-    localStorage.setItem("userCityId", tempId);
+    sessionStorage.setItem("userCityId", tempId);
   }
 
   const handelClickCity = async (e) => {
     e.preventDefault();
 
     try {
-      const response = await fetch("http://localhost:8080/api/cities/" + localStorage.getItem("userStateId"));
+      const response = await fetch("http://localhost:8080/api/cities/" + sessionStorage.getItem("userStateId"));
       const result = await response.json();
       setCityList(result);
     } catch (error) {
