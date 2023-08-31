@@ -51,6 +51,7 @@ function EmployeeLogin() {
                 console.log("submitted & got reply");
                 // Process the result here 
                 sessionStorage.setItem("isEmployeeLoggedIn", true); 
+                sessionStorage.setItem("employeeName", result.firstName + " " +result.lastName); 
                 // in case of employee we don't need to store all the information 
                 // about an employee in the session-storage 
 

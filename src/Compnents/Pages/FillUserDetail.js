@@ -265,48 +265,48 @@ function FillUserDetail() {
               <Row className="mb-3">
                 <Form.Group as={Col} controlId="formGridFirstName">
                   <Form.Label>First Name</Form.Label>
-                  <Form.Control type="text" placeholder="Enter First Name" value={firstName} onChange={(event) => { setFirstName(event.target.value) }} />
+                  <Form.Control type="text" placeholder="Enter First Name" value={firstName} onChange={(event) => { setFirstName(event.target.value) }} disabled={isLoggedIn} />
                 </Form.Group>
 
                 <Form.Group as={Col} controlId="formGridLastName">
                   <Form.Label>Last Name</Form.Label>
-                  <Form.Control type="text" placeholder="Enter Last Name" value={lastName} onChange={(event) => { setLastName(event.target.value) }} />
+                  <Form.Control type="text" placeholder="Enter Last Name" value={lastName} onChange={(event) => { setLastName(event.target.value) }} disabled={isLoggedIn}/>
                 </Form.Group>
               </Row>
 
               <Row className="mb-3">
                 <Form.Group as={Col} controlId="formGridMobileNumber">
                   <Form.Label>Mobile Number</Form.Label>
-                  <Form.Control type="text" placeholder="Enter Mobile Number" value={mobileNumber} onChange={(event) => { setMobileNumber(event.target.value) }} />
+                  <Form.Control type="text" placeholder="Enter Mobile Number" value={mobileNumber} onChange={(event) => { setMobileNumber(event.target.value) }} disabled={isLoggedIn}/>
                 </Form.Group>
 
                 <Form.Group as={Col} controlId="formGridAddress">
                   <Form.Label>Address</Form.Label>
-                  <Form.Control type="text" placeholder="Enter Address" value={address} onChange={(event) => { setAddress(event.target.value) }} />
+                  <Form.Control type="text" placeholder="Enter Address" value={address} onChange={(event) => { setAddress(event.target.value) }} disabled={isLoggedIn}/>
                 </Form.Group>
               </Row>
 
               <Row className="mb-3">
                 <Form.Group as={Col} controlId="formGridEmail">
                   <Form.Label>Email</Form.Label>
-                  <Form.Control type="email" placeholder="Enter Email" value={emailId} onChange={(event) => { setEmailId(event.target.value) }} />
+                  <Form.Control type="email" placeholder="Enter Email" value={emailId} onChange={(event) => { setEmailId(event.target.value) }} disabled={isLoggedIn}/>
                 </Form.Group>
 
                 <Form.Group as={Col} controlId="formGridDLNo">
                   <Form.Label>Driver's License No</Form.Label>
-                  <Form.Control type="text" placeholder="Enter DL No" value={dlNo} onChange={(event) => { setDlNo(event.target.value) }} />
+                  <Form.Control type="text" placeholder="Enter DL No" value={dlNo} onChange={(event) => { setDlNo(event.target.value) }} disabled={isLoggedIn}/>
                 </Form.Group>
               </Row>
 
               <Row className="mb-3">
                 <Form.Group as={Col} controlId="formGridAadharNo">
                   <Form.Label>Aadhar No</Form.Label>
-                  <Form.Control type="text" placeholder="Enter Aadhar No" value={aadharNo} onChange={(event) => { setAadharNo(event.target.value) }} />
+                  <Form.Control type="text" placeholder="Enter Aadhar No" value={aadharNo} onChange={(event) => { setAadharNo(event.target.value) }} disabled={isLoggedIn}/>
                 </Form.Group>
 
                 <Form.Group as={Col} controlId="formGridPassportNo">
                   <Form.Label>Passport No</Form.Label>
-                  <Form.Control type="text" placeholder="Enter Passport No" value={passportNo} onChange={(event) => { setPassportNo(event.target.value) }} />
+                  <Form.Control type="text" placeholder="Enter Passport No" value={passportNo} onChange={(event) => { setPassportNo(event.target.value) }} disabled={isLoggedIn}/>
                 </Form.Group>
               </Row>
 
@@ -316,12 +316,12 @@ function FillUserDetail() {
                   <>
                     <Form.Group as={Col} controlId="formGridCityName">
                       <Form.Label>City Name</Form.Label>
-                      <Form.Control type="text" placeholder="Enter City Name" value={cityName} onChange={(event) => { setCityName(event.target.value) }} />
+                      <Form.Control type="text" placeholder="Enter City Name" value={cityName} onChange={(event) => { setCityName(event.target.value) }} disabled={isLoggedIn}/>
                     </Form.Group>
 
                     <Form.Group as={Col} controlId="formGridStateName">
                       <Form.Label>State Name</Form.Label>
-                      <Form.Control type="text" placeholder="Enter State Name" value={stateName} onChange={(event) => { setStateName(event.target.value) }} />
+                      <Form.Control type="text" placeholder="Enter State Name" value={stateName} onChange={(event) => { setStateName(event.target.value) }} disabled={isLoggedIn}/>
                     </Form.Group> </>
                   :
                   <>

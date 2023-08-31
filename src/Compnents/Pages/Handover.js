@@ -20,7 +20,7 @@ function HandOver() {
         try {
             const response = await fetch(`http://localhost:8080/api/booking/by-email/${emailId}`);
             const result = await response.json();
-            setBooking(result);
+            setBooking(result); 
         } catch (error) {
             console.error('Error fetching data:', error);
         }
@@ -31,7 +31,7 @@ function HandOver() {
         try {
             console.log("yaha aaya");
             const response = await fetch(`http://localhost:8080/api/cars/${booking.pickupHubId}/${booking.category.categoryId}`);
-            const result = await response.json();
+            const result = await response.json(); 
             setCarList(result);
         } catch (error) {
             console.error('Error fetching data:', error);
