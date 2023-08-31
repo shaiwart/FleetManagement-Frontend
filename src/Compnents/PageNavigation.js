@@ -9,7 +9,7 @@ import Membership from "./Pages/Membership";
 import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import UserLogin from "./Pages/UserLogin";
 import { Row } from "react-bootstrap";
@@ -17,18 +17,21 @@ import { Row } from "react-bootstrap";
 
 export default function PageNavigation() {
     const [isUserLoggedIn, setIsUserLoggedIn] = useState(sessionStorage.getItem("isUserLoggedIn") ?
-        sessionStorage.getItem("isUserLoggedIn") : false); 
-
-    const [isEmployeeLoggedIn, setIsEmployeeLoggedIn] = useState(sessionStorage.getItem("isEmployeeLoggedIn") ?
-        sessionStorage.getItem("isEmployeeLoggedIn") : false);
-
+        sessionStorage.getItem("isUserLoggedIn") : false);
     const navigate = useNavigate();
-
-    function handleLogout() {
-        sessionStorage.clear(); 
+    
+    const [isEmployeeLoggedIn, setEmployeeLoggedIn] = useState(sessionStorage.getItem("isEmployeeLoggedIn") ?
+    sessionStorage.getItem("isEmployeeLoggedIn") : false);
+    function handleLogout() {     
+        sessionStorage.clear();
+        setIsUserLoggedIn(false); 
+        setEmployeeLoggedIn(false);
         navigate("/"); 
+        // this.forceUpdate("/")
+        
     }
 
+    
     const renderEmployeeOptions = (
         <section>
             <Nav.Link href="handover">Handover</Nav.Link>
@@ -66,15 +69,15 @@ export default function PageNavigation() {
                             </Nav>
                             <Nav>
                                 {isUserLoggedIn || isEmployeeLoggedIn ? <Nav.Link onClick={handleLogout} className='login-button'>Logout</Nav.Link> :
-                                    <Nav.Link href="userlogin" className='login-button'>Login</Nav.Link>}
+                                    <Nav.Link href="userlogin" className='login-button' >Login</Nav.Link>}
                             </Nav>
                         </Navbar.Collapse>
                     </Row>
 
-                    {sessionStorage.getItem("isEmployeeLoggedIn") ?
-                        <Row>
-                            <section>{renderEmployeeOptions}</section>
-                        </Row> : <></>}
+                    {sessionStorage.getItem("isEmployeeLoggedIn") ? 
+                    <Row>
+                        <section>{renderEmployeeOptions}</section> 
+                    </Row> : <></>}
 
                 </Container>
             </Navbar>
