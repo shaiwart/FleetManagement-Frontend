@@ -18,7 +18,8 @@ import FillUserDetail from './Compnents/Pages/FillUserDetail';
 import UserLogin from './Compnents/Pages/UserLogin'; 
 import EmployeeLogin from './Compnents/Pages/EmployeeLogin';
 import Handover from './Compnents/Pages/Handover';
-import Return from './Compnents/Pages/Return';
+import Return from './Compnents/Pages/Return'; 
+import HandoverSuccess from './Compnents/Pages/HandoverSuccess'; 
 
 
 function App() {
@@ -39,6 +40,7 @@ function App() {
           <Route path='userlogin' element={<UserLogin />} /> 
           <Route path='employeelogin' element={<EmployeeLogin />} /> 
           <Route path='handover' element={<Handover />} /> 
+          <Route path='handoversuccess' element={<HandoverSuccess />} /> 
           <Route path='return' element={<Return />} /> 
           <Route path='membership' element={<Membership />} /> 
           <Route path='registrationform' element={<RegistrationForm />} /> 

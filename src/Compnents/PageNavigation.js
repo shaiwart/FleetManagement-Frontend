@@ -17,7 +17,7 @@ import { Row } from "react-bootstrap";
 
 export default function PageNavigation() {
     const [isUserLoggedIn, setIsUserLoggedIn] = useState(sessionStorage.getItem("isUserLoggedIn") ?
-        sessionStorage.getItem("isUserLoggedIn") : false);
+        sessionStorage.getItem("isUserLoggedIn") : false); 
 
     const [isEmployeeLoggedIn, setIsEmployeeLoggedIn] = useState(sessionStorage.getItem("isEmployeeLoggedIn") ?
         sessionStorage.getItem("isEmployeeLoggedIn") : false);
@@ -25,8 +25,8 @@ export default function PageNavigation() {
     const navigate = useNavigate();
 
     function handleLogout() {
-        sessionStorage.clear();
-        navigate("/");
+        sessionStorage.clear(); 
+        navigate("/"); 
     }
 
     const renderEmployeeOptions = (
