@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Navbar from '../PageNavigation';
 import { useNavigate } from 'react-router-dom';
 import '../../Style/addonpage.css';
@@ -13,6 +13,11 @@ function AddOnPage() {
     { id: 3, name: 'Wi-Fi Hotspot', price: 100 },
     // Add more add-ons here
   ];
+
+  useEffect(() => {
+    // Store the number of selected addons in localStorage
+    localStorage.setItem('numberOfAddonsSelected', selectedAddOns.length);
+  }, [selectedAddOns]);
 
   const handleAddOnToggle = (addonId) => {
     if (selectedAddOns.includes(addonId)) {

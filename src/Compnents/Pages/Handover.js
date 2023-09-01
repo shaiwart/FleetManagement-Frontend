@@ -13,15 +13,15 @@ function HandOver() {
     const [userEmailId, setUserEmailId] = useState('');
     const [booking, setBooking] = useState(null);
     const [carList, setCarList] = useState([]);
-    const [selectedCarId, setSelectedCarId] = useState();  
-    const navigate = useNavigate(); 
+    const [selectedCarId, setSelectedCarId] = useState();
+    const navigate = useNavigate();
 
 
 
     const fetchBookingByEmailId = async () => {
         try {
-            const response = await fetch(`http://localhost:8080/api/booking/by-email/${userEmailId}`);
-            const result = await response.json();
+            const response = await fetch(`http://localhost:8080/api/booking/by-email/${userEmailId}`); // 
+            const result = await response.json(); // handel if empty is coming (take reference from userlogin POST)
             setBooking(result);
         } catch (error) {
             console.error('Error fetching data:', error);
@@ -54,49 +54,49 @@ function HandOver() {
 
         try {
             const billingData = {
-              staffName: sessionStorage.getItem("employeeName"), 
-              userName: booking.firstName + " " + booking.lastName, 
-              userEmailId: booking.emailId, 
-              customerMobileNo: booking.mobileNumber, 
-              customerAadharNo: booking.aadharNo,
-              customerPassNo: booking.passportNo,
-              billAmount: 0.0,
-              fuelStatus: "full",
-              startDate: "2023-08-31T12:00:00",
-              endDate: "2023-09-01T12:00:00",
-              categoryId: booking.category.categoryId, 
-              car: {
-                carId: sessionStorage.getItem("selectedCarId")
-              },
-              booking: {
-                bookingId: booking.bookingId 
-              },
-              pickupHub: {
-                hubId: booking.pickupHubId 
-              },
-              dropHub: {
-                hubId: booking.dropHubId 
-              }
+                staffName: sessionStorage.getItem("employeeName"),
+                userName: booking.firstName + " " + booking.lastName,
+                userEmailId: booking.emailId,
+                customerMobileNo: booking.mobileNumber,
+                customerAadharNo: booking.aadharNo,
+                customerPassNo: booking.passportNo,
+                billAmount: 0.0,
+                fuelStatus: "full",
+                startDate: booking.startDate,
+                endDate: booking.endDate,
+                categoryId: booking.category.categoryId,
+                car: {
+                    carId: sessionStorage.getItem("selectedCarId")
+                },
+                booking: {
+                    bookingId: booking.bookingId
+                },
+                pickupHub: {
+                    hubId: booking.pickupHubId
+                },
+                dropHub: {
+                    hubId: booking.dropHubId
+                }
             };
-      
+
             const response = await fetch('http://localhost:8080/api/addbilling', {
-              method: 'POST',
-              headers: {
-                'Content-Type': 'application/json'
-              },
-              body: JSON.stringify(billingData)
-            }); 
-      
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(billingData)
+            });
+
             if (response.ok) {
-              console.log('Billing record created successfully.');
-              // Perform any additional actions after successful creation
-              navigate("/handoversuccess")
+                console.log('Billing record created successfully.');
+                // Perform any additional actions after successful creation
+                navigate("/handoversuccess")
             } else {
-              console.error('Failed to create billing record.');
+                console.error('Failed to create billing record.');
             }
-          } catch (error) {
+        } catch (error) {
             console.error('Error creating billing record:', error);
-          }
+        }
 
     }
 
@@ -132,29 +132,42 @@ function HandOver() {
                         {booking && (
                             <div className="booking-table">
                                 <Table striped bordered>
-                                    <thead>
-                                        <tr>
-                                            <th>Booking ID</th>
-                                            <th>Aadhar No</th>
-                                            <th>Booking Date and Time</th>
-                                            <th>First Name</th>
-                                            <th>Last Name</th>
-                                            <th>Driving License number</th>
-                                            <th>Car category selected</th>
-                                        </tr>
-                                    </thead>
                                     <tbody>
                                         <tr>
+                                            <td><strong>Booking ID:</strong></td>
                                             <td>{booking.bookingId}</td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>Aadhar No:</strong></td>
                                             <td>{booking.aadharNo}</td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>Booking Date and Time:</strong></td>
                                             <td>{booking.bookingDateAndTime}</td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>First Name:</strong></td>
                                             <td>{booking.firstName}</td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>Last Name:</strong></td>
                                             <td>{booking.lastName}</td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>Driving License number:</strong></td>
                                             <td>{booking.dLNumber}</td>
-                                            <td>{sessionStorage.getItem('pickcategoryName')}</td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>Pickup Date:</strong></td>
+                                            <td>{booking.startDate}</td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>Drop Date:</strong></td>
+                                            <td>{booking.endDate}</td>
                                         </tr>
                                     </tbody>
                                 </Table>
+
                                 <Button variant="primary" onClick={handleCar}>
                                     Assign Car
                                 </Button>

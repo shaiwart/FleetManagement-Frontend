@@ -17,6 +17,20 @@ function Return() {
     const [selectedCarId, setSelectedCarId] = useState();
     const navigate = useNavigate();
     const [fuelStatus, setFuelStatus] = useState();
+    const [price, setPrice] = useState();
+
+    // // 
+    // const currentDate = new Date(); // 2023-09-22T15:30:00 // 2023-8-30T8:22:23
+    // const year = currentDate.getFullYear();
+    // const month = String(currentDate.getMonth() + 1).padStart(2, '0'); // Adding leading zero
+    // const day = String(currentDate.getDate()).padStart(2, '0'); // Adding leading zero
+    // const hours = String(currentDate.getHours()).padStart(2, '0'); // Adding leading zero
+    // const minutes = String(currentDate.getMinutes()).padStart(2, '0'); // Adding leading zero
+    // const seconds = String(currentDate.getSeconds()).padStart(2, '0'); // Adding leading zero 
+    // const formattedDate = `${year}-${month}-${day}T${hours}:${minutes}:${seconds}`;
+    // console.log(formattedDate);
+
+
 
     const handleFuelStatusChange = (event) => {
         setFuelStatus(event.target.value);
@@ -113,15 +127,56 @@ function Return() {
 
     }
 
-    const handleBillAmount = () => {
+    const handleBillAmount = () => { 
+        let totalCost = 0.0; 
+        const numberOfAddonsSelected = localStorage.getItem("numberOfAddonsSelected");
+        const startDate = new Date(booking.startDate); 
+        const SystemDate = new Date(); // Current date and time 
 
+        // Calculate the difference in milliseconds
+        const differenceMilliseconds = SystemDate - startDate;
+        // Calculate the difference in seconds, minutes, hours, and days
+        const secondsDifference = Math.abs(differenceMilliseconds / 1000);
+        const minutesDifference = Math.abs(secondsDifference / 60);
+        const hoursDifference = Math.abs(minutesDifference / 60);
+        const daysDifference = Math.abs(hoursDifference / 24); 
+
+        let tempDays = Math.ceil(daysDifference); // if days comes 4.3 then it will be considered as 5 days 
+
+        let months = 0, weeks = 0, days = 0; 
+        months = tempDays/30; 
+        tempDays = tempDays % 30; 
+        weeks = weeks/7; 
+        tempDays = tempDays%7; 
+        days = tempDays; 
+
+        let fulePrice = 0; 
+        if(fuelStatus==="full") {
+            fulePrice = 0; 
+        }
+        else if(fuelStatus === "half") {
+            fulePrice=5; 
+        }
+        else {
+            fulePrice=10; 
+        }
+
+
+        totalCost = (numberOfAddonsSelected * 100) + 
+                    (months * booking.category.monthlyRates) + (weeks * booking.category.weeklyRates) + (days*booking.category.dailyRates) + 
+                    (fulePrice); 
+
+
+
+        console.log("total Cost-> "); 
+        console.log(totalCost); 
     };
 
     const renderBillAmount = (
         <section>
             <Button variant="primary" onClick={handleBillAmount}>
-                Generate Bill Amount 
-            </Button> 
+                Generate Bill Amount
+            </Button>
 
         </section>
     );
@@ -238,7 +293,7 @@ function Return() {
                                     </div>
 
                                     <div>
-                                        { fuelStatus ? <>{renderBillAmount}</> : <></>} 
+                                        {fuelStatus ? <>{renderBillAmount}</> : <></>}
                                     </div>
                                 </div>
                             </div>
