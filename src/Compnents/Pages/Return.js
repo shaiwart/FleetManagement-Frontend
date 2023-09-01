@@ -17,20 +17,8 @@ function Return() {
     const [selectedCarId, setSelectedCarId] = useState();
     const navigate = useNavigate();
     const [fuelStatus, setFuelStatus] = useState();
-    const [price, setPrice] = useState();
-
-    // // 
-    // const currentDate = new Date(); // 2023-09-22T15:30:00 // 2023-8-30T8:22:23
-    // const year = currentDate.getFullYear();
-    // const month = String(currentDate.getMonth() + 1).padStart(2, '0'); // Adding leading zero
-    // const day = String(currentDate.getDate()).padStart(2, '0'); // Adding leading zero
-    // const hours = String(currentDate.getHours()).padStart(2, '0'); // Adding leading zero
-    // const minutes = String(currentDate.getMinutes()).padStart(2, '0'); // Adding leading zero
-    // const seconds = String(currentDate.getSeconds()).padStart(2, '0'); // Adding leading zero 
-    // const formattedDate = `${year}-${month}-${day}T${hours}:${minutes}:${seconds}`;
-    // console.log(formattedDate);
-
-
+    const [totalCost, setTotalCost] = useState(); 
+    const [currentDateTime,setCurrentDateTime] = useState(); 
 
     const handleFuelStatusChange = (event) => {
         setFuelStatus(event.target.value);
@@ -127,49 +115,65 @@ function Return() {
 
     }
 
-    const handleBillAmount = () => { 
-        let totalCost = 0.0; 
+    function roundToDecimalPlaces(number, decimalPlaces) {
+        const factor = 10 ** decimalPlaces;
+        return Math.round(number * factor) / factor;
+    }
+    let SystemDate = "2000-01-01T12:00:00"; // isko const nahi rakhna , bcoz it is being changed later 
+
+    const handleBillAmount = () => {
+        let tempCost = 0.0;
         const numberOfAddonsSelected = localStorage.getItem("numberOfAddonsSelected");
-        const startDate = new Date(booking.startDate); 
-        const SystemDate = new Date(); // Current date and time 
+        const startDate = new Date(booking.startDate);
+        // SystemDate = new Date(); // Current date and time 
+
+        const currentDate = new Date(); // 2023-09-22T15:30:00 // 2023-8-30T8:22:23
+        const year = currentDate.getFullYear();
+        const month = String(currentDate.getMonth() + 1).padStart(2, '0'); // Adding leading zero
+        const day = String(currentDate.getDate()).padStart(2, '0'); // Adding leading zero
+        const hours = String(currentDate.getHours()).padStart(2, '0'); // Adding leading zero
+        const minutes = String(currentDate.getMinutes()).padStart(2, '0'); // Adding leading zero
+        const seconds = String(currentDate.getSeconds()).padStart(2, '0'); // Adding leading zero 
+        const formattedDate = `${year}-${month}-${day}T${hours}:${minutes}:${seconds}`; 
+        setCurrentDateTime(formattedDate); 
+        console.log(formattedDate);
 
         // Calculate the difference in milliseconds
-        const differenceMilliseconds = SystemDate - startDate;
+        const differenceMilliseconds = currentDate - startDate; 
         // Calculate the difference in seconds, minutes, hours, and days
         const secondsDifference = Math.abs(differenceMilliseconds / 1000);
         const minutesDifference = Math.abs(secondsDifference / 60);
         const hoursDifference = Math.abs(minutesDifference / 60);
-        const daysDifference = Math.abs(hoursDifference / 24); 
+        const daysDifference = Math.abs(hoursDifference / 24);
 
         let tempDays = Math.ceil(daysDifference); // if days comes 4.3 then it will be considered as 5 days 
 
-        let months = 0, weeks = 0, days = 0; 
-        months = tempDays/30; 
-        tempDays = tempDays % 30; 
-        weeks = weeks/7; 
-        tempDays = tempDays%7; 
-        days = tempDays; 
+        let months = 0, weeks = 0, days = 0;
+        months = tempDays / 30;
+        tempDays = tempDays % 30;
+        weeks = weeks / 7;
+        tempDays = tempDays % 7;
+        days = tempDays;
 
-        let fulePrice = 0; 
-        if(fuelStatus==="full") {
-            fulePrice = 0; 
+        let fulePrice = 0;
+        if (fuelStatus === "full") {
+            fulePrice = 0;
         }
-        else if(fuelStatus === "half") {
-            fulePrice=5; 
+        else if (fuelStatus === "half") {
+            fulePrice = 5;
         }
         else {
-            fulePrice=10; 
+            fulePrice = 10;
         }
 
 
-        totalCost = (numberOfAddonsSelected * 100) + 
-                    (months * booking.category.monthlyRates) + (weeks * booking.category.weeklyRates) + (days*booking.category.dailyRates) + 
-                    (fulePrice); 
+        tempCost = (numberOfAddonsSelected * 100) +
+            (months * booking.category.monthlyRates) + (weeks * booking.category.weeklyRates) + (days * booking.category.dailyRates) +
+            (fulePrice);
+
+        setTotalCost(roundToDecimalPlaces(tempCost, 2));
 
 
-
-        console.log("total Cost-> "); 
-        console.log(totalCost); 
     };
 
     const renderBillAmount = (
@@ -177,9 +181,42 @@ function Return() {
             <Button variant="primary" onClick={handleBillAmount}>
                 Generate Bill Amount
             </Button>
-
         </section>
     );
+
+
+    const handleUpdateBillingInfo = async () => {
+        try {
+            const updatedBillingData = {
+                billAmount: totalCost, // Update with the new bill amount
+                fuelStatus: fuelStatus, // Update with the selected fuel status
+                endDate: currentDateTime, // Keep the existing endDate
+            }; 
+            console.log("-> ");
+            console.log(updatedBillingData); 
+            // console.log(totalCost);
+            // console.log(billing.userEmailId); 
+
+
+            const response = await fetch(`http://localhost:8080/api/updatebilling/${billing.userEmailId}`, { 
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(updatedBillingData),
+            });
+
+            if (response.ok) {
+                console.log('Billing record updated successfully.');
+                // Perform any additional actions after successful update 
+            } else {
+                console.error('Failed to update billing record.');
+            }
+        } catch (error) {
+            console.error('Error updating billing record:', error);
+        }
+    };
+
 
 
 
@@ -229,7 +266,7 @@ function Return() {
                                         </tr>
                                         <tr>
                                             <td><strong>Bill Amount:</strong></td>
-                                            <td>{billing.billAmount}</td>
+                                            <td>{totalCost || billing.billAmount}</td>
                                         </tr>
                                         <tr>
                                             <td><strong>Start Date:</strong></td>
@@ -294,6 +331,11 @@ function Return() {
 
                                     <div>
                                         {fuelStatus ? <>{renderBillAmount}</> : <></>}
+                                        <br />
+                                        <Button variant="primary" onClick={handleUpdateBillingInfo}>
+                                            Generate Invoice
+                                        </Button>
+
                                     </div>
                                 </div>
                             </div>
