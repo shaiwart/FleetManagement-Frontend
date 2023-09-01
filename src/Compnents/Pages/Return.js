@@ -4,7 +4,7 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import React, { useState } from 'react';
 
-import Button from 'react-bootstrap/Button';
+import { Button, Form } from 'react-bootstrap';
 import Table from 'react-bootstrap/Table';
 import { useNavigate } from "react-router-dom";
 
@@ -12,53 +12,47 @@ function Return() {
     const [phoneNumber, setPhoneNumber] = useState('');
     const [userEmailId, setUserEmailId] = useState('');
     const [booking, setBooking] = useState(null);
-    const [billing, setBilling] = useState(null); 
+    const [billing, setBilling] = useState(null);
     const [carList, setCarList] = useState([]);
-    const [selectedCarId, setSelectedCarId] = useState();  
-    const navigate = useNavigate(); 
+    const [selectedCarId, setSelectedCarId] = useState();
+    const navigate = useNavigate();
+    const [fuelStatus, setFuelStatus] = useState();
+
+    const handleFuelStatusChange = (event) => {
+        setFuelStatus(event.target.value);
+    };
 
 
+    const fetchBookingByEmailId = () => {
+        fetch(`http://localhost:8080/api/booking/by-email/${userEmailId}`)
+            .then((response) => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            })
+            .then((result) => {
+                setBooking(result);
+                console.log("booking result-> ");
+                console.log(result);
 
-    const fetchBillingByBookingId = async () => { 
-        try {
-            const billingResponse = await fetch(`http://localhost:8080/api/billing/by-bookingid/${booking.bookingId}`); 
-            const billingResult = await billingResponse.json(); 
-            setBilling(billingResult); 
-            console.log("billing result-> "); 
-            console.log(billingResult); 
-        } catch (error) {
-            console.error('Error fetching data:', error);
-        }
-
-    };  
-
-    const fetchBookingByEmailId = async () => {
-        try {
-            const response = await fetch(`http://localhost:8080/api/booking/by-email/${userEmailId}`);
-            const result = await response.json();
-            setBooking(result); 
-            console.log("billing result-> "); 
-            console.log(result); 
-            console.log(booking.bookingId);  
-            fetchBillingByBookingId(); 
-
-        } catch (error) {
-            console.error('Error fetching data:', error);
-        }
-    }; 
-
-
-    const handleCar = async () => {
-        try {
-            console.log("yaha aaya");
-            const response = await fetch(`http://localhost:8080/api/cars/${booking.pickupHubId}/${booking.category.categoryId}`);
-            const result = await response.json();
-            setCarList(result);
-        } catch (error) {
-            console.error('Error fetching data:', error);
-        }
-    }
-
+                return fetch(`http://localhost:8080/api/billing/by-bookingid/${result.bookingId}`);
+            })
+            .then((billingResponse) => {
+                if (!billingResponse.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return billingResponse.json();
+            })
+            .then((billingResult) => {
+                setBilling(billingResult);
+                console.log("billing result-> ");
+                console.log(billingResult);
+            })
+            .catch((error) => {
+                console.error('Error fetching data:', error);
+            });
+    };
 
     const handleCarSelection = (selectedCar) => {
         // Perform your desired task using the selected car
@@ -73,57 +67,62 @@ function Return() {
 
         try {
             const billingData = {
-              billingName: sessionStorage.getItem("employeeName"), 
-              userName: booking.firstName + " " + booking.lastName, 
-              userEmailId: booking.emailId, 
-              customerMobileNo: booking.mobileNumber, 
-              customerAadharNo: booking.aadharNo,
-              customerPassNo: booking.passportNo,
-              billAmount: 0.0,
-              fuelStatus: "full",
-              startDate: "2023-08-31T12:00:00",
-              endDate: "2023-09-01T12:00:00",
-              categoryId: booking.category.categoryId, 
-              car: {
-                carId: sessionStorage.getItem("selectedCarId")
-              },
-              booking: {
-                bookingId: booking.bookingId 
-              },
-              pickupHub: {
-                hubId: booking.pickupHubId 
-              },
-              dropHub: {
-                hubId: booking.dropHubId 
-              }
+                staffName: sessionStorage.getItem("employeeName"),
+                userName: booking.firstName + " " + booking.lastName,
+                userEmailId: booking.emailId,
+                customerMobileNo: booking.mobileNumber,
+                customerAadharNo: booking.aadharNo,
+                customerPassNo: booking.passportNo,
+                billAmount: 0.0,
+                fuelStatus: "full",
+                startDate: "2023-08-31T12:00:00",
+                endDate: "2023-09-01T12:00:00",
+                categoryId: booking.category.categoryId,
+                car: {
+                    carId: sessionStorage.getItem("selectedCarId")
+                },
+                booking: {
+                    bookingId: booking.bookingId
+                },
+                pickupHub: {
+                    hubId: booking.pickupHubId
+                },
+                dropHub: {
+                    hubId: booking.dropHubId
+                }
             };
-      
+
             const response = await fetch('http://localhost:8080/api/addbilling', {
-              method: 'POST',
-              headers: {
-                'Content-Type': 'application/json'
-              },
-              body: JSON.stringify(billingData)
-            }); 
-      
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(billingData)
+            });
+
             if (response.ok) {
-              console.log('Billing record created successfully.');
-              // Perform any additional actions after successful creation
-              navigate("/handoversuccess")
+                console.log('Billing record created successfully.');
+                // Perform any additional actions after successful creation
+                navigate("/handoversuccess")
             } else {
-              console.error('Failed to create billing record.');
+                console.error('Failed to create billing record.');
             }
-          } catch (error) {
+        } catch (error) {
             console.error('Error creating billing record:', error);
-          }
+        }
 
     }
 
-    const renderHandover = (
+    const handleBillAmount = () => {
+
+    };
+
+    const renderBillAmount = (
         <section>
-            <Button variant="primary" onClick={handleHandover}>
-                Handover
-            </Button>
+            <Button variant="primary" onClick={handleBillAmount}>
+                Generate Bill Amount 
+            </Button> 
+
         </section>
     );
 
@@ -137,7 +136,7 @@ function Return() {
                 <div>
                     <h3>Return Car</h3>
                     <div className="booking-details-container">
-                        <h5>Enter customer's email id</h5> 
+                        <h5>Enter customer's email id</h5>
                         <div className="input-fields">
                             <input
                                 type="text"
@@ -149,69 +148,99 @@ function Return() {
                                 Fetch by Email ID
                             </Button>
                         </div>
-                        {booking && (
+                        {billing && (
                             <div className="booking-table">
                                 <Table striped bordered>
-                                    <thead>
-                                        <tr>
-                                            <th>Booking ID</th>
-                                            <th>Aadhar No</th>
-                                            <th>Booking Date and Time</th>
-                                            <th>First Name</th>
-                                            <th>Last Name</th>
-                                            <th>Driving License number</th>
-                                            <th>Car category selected</th>
-                                        </tr>
-                                    </thead>
                                     <tbody>
                                         <tr>
-                                            <td>{booking.bookingId}</td>
-                                            <td>{booking.aadharNo}</td>
-                                            <td>{booking.bookingDateAndTime}</td>
-                                            <td>{booking.firstName}</td>
-                                            <td>{booking.lastName}</td>
-                                            <td>{booking.dLNumber}</td>
-                                            <td>{sessionStorage.getItem('pickcategoryName')}</td>
+                                            <td><strong>Billing ID:</strong></td>
+                                            <td>{billing.billingId}</td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>Staff:</strong></td>
+                                            <td>{billing.staffName}</td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>Customer Name:</strong></td>
+                                            <td>{billing.userName}</td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>Email ID:</strong></td>
+                                            <td>{billing.userEmailId}</td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>Fuel Status:</strong></td>
+                                            <td>{fuelStatus || billing.fuelStatus}</td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>Bill Amount:</strong></td>
+                                            <td>{billing.billAmount}</td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>Start Date:</strong></td>
+                                            <td>{billing.startDate}</td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>End Date:</strong></td>
+                                            <td>{billing.endDate}</td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>Category:</strong></td>
+                                            <td>{billing.booking.category.categoryName}</td>
                                         </tr>
                                     </tbody>
                                 </Table>
-                                <Button variant="primary" onClick={handleCar}>
-                                    Assign Car
-                                </Button>
-                                {carList.length > 0 && (
-                                    <div className="car-list">
-                                        <h4>Available Cars:</h4>
-                                        <Table striped bordered>
-                                            <thead>
-                                                <tr>
-                                                    <th>Car Name</th>
-                                                    <th>Car Numberplate</th>
-                                                    <th>Action</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                {carList.map(car => (
-                                                    <tr key={car.carId}>
-                                                        <td>{car.carName}</td>
-                                                        <td>{car.carNumberplate}</td>
-                                                        <td>
-                                                            <Button
-                                                                variant="secondary"
-                                                                onClick={() => handleCarSelection(car)}
-                                                                className="select-button"
-                                                            >
-                                                                Select
-                                                            </Button>
-                                                        </td>
-                                                    </tr>
-                                                ))}
-                                            </tbody>
-                                        </Table>
 
-                                        {selectedCarId ? <>{renderHandover}</> : <></>}
+                                <div>
+                                    <div>
+                                        <Button
+                                            variant="primary"
+                                            onClick={() => {
+                                                // Show the radio buttons when the Fuel Status button is clicked
+                                                // You can also toggle the visibility with a state variable if needed
+                                                setFuelStatus(''); // Clear the selected value when the button is clicked
+                                            }}
+                                        >
+                                            Fuel Status
+                                        </Button>
 
+                                        {fuelStatus === '' || (
+                                            <Form>
+                                                <Form.Check
+                                                    type="radio"
+                                                    label="Empty"
+                                                    name="fuelStatus"
+                                                    value="empty"
+                                                    checked={fuelStatus === 'empty'}
+                                                    onChange={handleFuelStatusChange}
+                                                />
+                                                <Form.Check
+                                                    type="radio"
+                                                    label="Half"
+                                                    name="fuelStatus"
+                                                    value="half"
+                                                    checked={fuelStatus === 'half'}
+                                                    onChange={handleFuelStatusChange}
+                                                />
+                                                <Form.Check
+                                                    type="radio"
+                                                    label="Full"
+                                                    name="fuelStatus"
+                                                    value="full"
+                                                    checked={fuelStatus === 'full'}
+                                                    onChange={handleFuelStatusChange}
+                                                />
+                                            </Form>
+                                        )}
+
+                                        {/* Display the selected fuel status */}
+                                        {fuelStatus !== '' && <p>Selected Fuel Status: {fuelStatus}</p>}
                                     </div>
-                                )}
+
+                                    <div>
+                                        { fuelStatus ? <>{renderBillAmount}</> : <></>} 
+                                    </div>
+                                </div>
                             </div>
                         )}
                     </div>

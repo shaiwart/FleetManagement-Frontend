@@ -54,7 +54,7 @@ function HandOver() {
 
         try {
             const billingData = {
-              billingName: sessionStorage.getItem("employeeName"), 
+              staffName: sessionStorage.getItem("employeeName"), 
               userName: booking.firstName + " " + booking.lastName, 
               userEmailId: booking.emailId, 
               customerMobileNo: booking.mobileNumber, 

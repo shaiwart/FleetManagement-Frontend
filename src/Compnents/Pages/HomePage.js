@@ -1,91 +1,91 @@
-import Cities from "../PickupCity";
-import Navbar from "../PageNavigation"; 
-import HubSelector from "./PickupHubSelector";
-import { Link, useNavigate } from "react-router-dom";
-import { useEffect, useState } from "react";
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
-import '../../Style/Home.css';
 import Form from 'react-bootstrap/Form';
-import PickupState from "../PickupState";
-import PickupCity from "../PickupCity";
+import Button from 'react-bootstrap/Button';
+import Navbar from '../PageNavigation';
+import PickupState from '../PickupState';
+import PickupCity from '../PickupCity';
 import DropState from '../DropState';
 import DropCity from '../DropCity';
-import PickupAirport from "../PickupAirport";
-import DropAirport from "../DropAirport";
-import Button from 'react-bootstrap/Button';
+import PickupAirport from '../PickupAirport';
+import DropAirport from '../DropAirport';
+import carImage from '../../Images/vector.jpg'; // Update the image path
+import '../../Style/Home.css'; 
 
+export default function HomePage() {
+  const [pickupDate, setPickupDate] = useState('');
+  const [dropDate, setDropDate] = useState('');
+  const navigate = useNavigate();
 
-export default function HomePage() {  
+  const handleClickTo = () => {
+    sessionStorage.setItem('pickupDate', pickupDate);
+    sessionStorage.setItem('dropDate', dropDate);
+    navigate('/PickupHubSelector'); // Navigate to PickupHubSelector component
+  };
 
-    const pickupdate = ((e) => {
-        let date = e.target.value
-        sessionStorage.setItem("pickupdate", date);
-        console.log(sessionStorage.getItem("pickupdate"))
-    })
-    const dropdate = ((e) => {
-        let date = e.target.value
-        sessionStorage.setItem("dropdate", date);
-        console.log(sessionStorage.getItem("dropdate"))
-    })
+  //sessionStorage.clear();
 
-    const navigate = useNavigate(); 
-    
-    const columnStyle = {
-        border: '1px solid gray', // Add border
-        backgroundColor: 'lightgray', // Add gray background color
-        // padding: '10px', // Add padding for spacing
-    };
+  return (
+    <div className="home-container">
+        <Navbar/>
+      <Container>
+        <Row>
+          <Col xs={5} className="pickup-column">
+            <div className="date-picker">
+              <Form.Group controlId="pickupDate">
+                <Form.Label>Pickup Date</Form.Label>
+                <Form.Control
+                  type="datetime-local"
+                  value={pickupDate}
+                  onChange={(e) => setPickupDate(e.target.value)}
+                />
+              </Form.Group>
+              <Form.Group controlId="dropDate">
+                <Form.Label>Drop Date</Form.Label>
+                <Form.Control
+                  type="datetime-local"
+                  value={dropDate}
+                  onChange={(e) => setDropDate(e.target.value)}
+                />
+              </Form.Group>
+            </div>
+            <div className="pickup-section">
+              <h3>Select Pickup Location</h3>
+              <div className="location-section">
+                <h5>Airport</h5>
+                <PickupAirport />
+                <h5>State</h5>
+                <PickupState />
+                <h5>City</h5>
+                <PickupCity />
+              </div>
+            </div>
+            <div className="drop-section">
+              <h3>Select Drop Location</h3>
+              <div className="location-section">
+                <h5>Airport</h5>
+                <DropAirport />
+                <h5>State</h5>
+                <DropState />
+                <h5>City</h5>
+                <DropCity />
+              </div>
+            </div>
+            <Button onClick={handleClickTo} variant="primary" className="search-button">
+              Search Hub
+            </Button>
+          </Col>
 
-    const handleClickto = async () => {
-        navigate('/PickupHubSelector'); // Navigate to HubSelector component
-    }
-    sessionStorage.removeItem("pickUpAirportId")
-    sessionStorage.removeItem("pickUpCityId")
-    sessionStorage.removeItem("pickCategoryId") 
-
-
-    return (
-        <>
-            <Navbar/> 
-            <Container>
-                <Row>
-
-                    <Col xs={5} style={columnStyle}>
-
-                        <Row style={columnStyle}>
-                            <table>
-                                <tr>
-                                    <td>pickup date <input type="datetime-local" onChange={pickupdate}></input><br /></td>
-                                    <td>drop date <input type="datetime-local" onChange={dropdate}></input></td>
-                                </tr>
-                            </table>
-                            Select Airport
-                            <PickupAirport />
-
-                            Select Pick-up State and City
-                            <PickupState />
-                            <PickupCity />
-                        </Row>
-
-                        <Row style={columnStyle}>
-                            Select Airport
-                            <DropAirport />
-
-                            Select Drop State and City
-                            <DropState />
-                            <DropCity />
-                        </Row>
-
-
-                        <button onClick={handleClickto}>Search hub</button>
-                    </Col>
-
-                    <Col style={columnStyle}>Car images</Col>
-
-                </Row>
-            </Container>
-        </>
-    );
+          <Col className="car-images-column">
+            <div className="car-images-section">
+              <img src={carImage} alt="Car" />
+            </div>
+          </Col>
+        </Row>
+      </Container>
+    </div>
+  );
 }

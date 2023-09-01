@@ -22,7 +22,7 @@ function BookingPage() {
   // const [userId, setUserId] = useState(); 
 
   let pickcategoryName = sessionStorage.getItem('pickcategoryName');
-  let pickuphubName = sessionStorage.getItem('pickuphubName');
+  let pickuphubName = sessionStorage.getItem('pickupHubName');
   let dropHubName = sessionStorage.getItem('dropHubName');
 
   const navigate = useNavigate();
@@ -60,6 +60,8 @@ function BookingPage() {
 
       const tempData = {
         "bookingDateAndTime": formattedDate,
+        "startDate": sessionStorage.getItem("pickupDate") == undefined ? 0 : sessionStorage.getItem("pickupDate"),
+        "endDate": sessionStorage.getItem("dropDate") == undefined ? 0 : sessionStorage.getItem("dropDate"), 
         "firstName": firstName,
         "lastName": lastName,
         "mobileNumber": mobileNumber,
