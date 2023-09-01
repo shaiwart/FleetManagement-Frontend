@@ -190,7 +190,7 @@ function Return() {
             const updatedBillingData = {
                 billAmount: totalCost, // Update with the new bill amount
                 fuelStatus: fuelStatus, // Update with the selected fuel status
-                endDate: currentDateTime, // Keep the existing endDate
+                endDate: currentDateTime // Keep the existing endDate
             }; 
             console.log("-> ");
             console.log(updatedBillingData); 
