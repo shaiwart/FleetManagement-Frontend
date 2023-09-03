@@ -19,14 +19,13 @@ function Membership() {
 
   const [userData, setUserData] = useState({});
   const navigate = useNavigate();
-  const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [emailId, setEmailId] = useState('');
 
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
   const [mobileNumber, setMobileNumber] = useState('');
   const [address, setAddress] = useState('');
-  const [emailId, setEmailId] = useState('');
   const [dlNo, setDlNo] = useState('');
   const [aadharNo, setAadharNo] = useState('');
   const [passportNo, setPassportNo] = useState('');
@@ -97,7 +96,7 @@ function Membership() {
       "firstName": firstName,
       "lastName": lastName,
       "mobileNumber": mobileNumber,
-      "emailId": email,
+      "emailId": emailId,
       "address": address,
       "password": password,
       "dlNo": dlNo,
@@ -110,7 +109,7 @@ function Membership() {
       "city": {
         "cityId": cityId // Replace with the actual city ID
       }
-    }; 
+    };
 
     try {
       const response = await fetch('http://localhost:8080/api/user/add', {
@@ -120,23 +119,23 @@ function Membership() {
           'Content-Type': 'application/json'
         }
       });
-    
+
       if (response.ok) {
         console.log("User successfully added.");
         // You can navigate to the success page here if needed.
-        // navigate("/successpage"); 
+        navigate("/memberregisteredsuccess"); 
       } else {
         // Handle the error scenario
         console.log("Error while adding user.");
-        
+
         // You can get the error response text for more details
         const errorText = await response.text();
         console.error("Error Response:", errorText);
-    
+
         // If the error response is in JSON format, you can parse it
         // const errorJson = await response.json();
         // console.error("Error Response:", errorJson);
-    
+
         // Depending on the actual API response format, handle the error appropriately.
       }
     } catch (error) {
@@ -144,7 +143,6 @@ function Membership() {
       console.error("Network Error:", error);
       // Add more specific error handling as needed.
     }
-    
 
   }
 
@@ -224,13 +222,6 @@ function Membership() {
                   <Form.Control type="text" placeholder="Enter Password" value={password} onChange={(event) => { setPassword(event.target.value) }} />
                 </Form.Group> */}
               </Row>
-
-
-
-              {/* Display error message if passwords don't match */}
-              {passwordMatchError && (
-                <div className="text-danger">Passwords do not match.</div>
-              )}
 
               <Row className="mb-3">
                 <Form.Group as={Col} controlId="formGridFirstName">
@@ -312,6 +303,11 @@ function Membership() {
                   <Form.Label>Re-enter Password</Form.Label>
                   <Form.Control type="password" placeholder="Re-enter Password" value={rePassword} onChange={(event) => { setRePassword(event.target.value) }} />
                 </Form.Group>
+
+                {/* Display error message if passwords don't match */}
+                {passwordMatchError && (
+                  <div className="text-danger">Passwords do not match.</div>
+                )}
               </Row>
 
               <Button variant="primary" type="submit">

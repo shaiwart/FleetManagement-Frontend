@@ -21,6 +21,7 @@ import Handover from './Compnents/Pages/Handover';
 import Return from './Compnents/Pages/Return'; 
 import HandoverSuccess from './Compnents/Pages/HandoverSuccess'; 
 import Invoice from './Compnents/Pages/Invoice';
+import MemberRegisteredSuccess from './Compnents/Pages/MemberRegisteredSuccess';
 
 
 function App() {
@@ -49,6 +50,7 @@ function App() {
           <Route path='successpage' element={<SuccessPage />} /> 
           <Route path='inovice' element={<Invoice />} /> 
           <Route path='membership' element={<Membership />} /> 
+          <Route path='memberregisteredsuccess' element={<MemberRegisteredSuccess />} /> 
 
           
           <Route path='about' element={<AboutUs/>} /> 
