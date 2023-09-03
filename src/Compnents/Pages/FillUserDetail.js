@@ -344,13 +344,6 @@ function FillUserDetail() {
                   </>
 
                 }
-
-
-
-
-
-
-
               </Row>
 
               <Button variant="primary" type="submit">

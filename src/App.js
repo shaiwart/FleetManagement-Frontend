@@ -20,6 +20,7 @@ import EmployeeLogin from './Compnents/Pages/EmployeeLogin';
 import Handover from './Compnents/Pages/Handover';
 import Return from './Compnents/Pages/Return'; 
 import HandoverSuccess from './Compnents/Pages/HandoverSuccess'; 
+import Invoice from './Compnents/Pages/Invoice';
 
 
 function App() {
@@ -46,6 +47,9 @@ function App() {
           <Route path='registrationform' element={<RegistrationForm />} /> 
           <Route path='booking' element={<Booking  />} /> 
           <Route path='successpage' element={<SuccessPage />} /> 
+          <Route path='inovice' element={<Invoice />} /> 
+          <Route path='membership' element={<Membership />} /> 
+
           
           <Route path='about' element={<AboutUs/>} /> 
           <Route path='contact' element={<ContactUs/>} /> 

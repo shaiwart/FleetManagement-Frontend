@@ -38,6 +38,7 @@ function Return() {
                 console.log("booking result-> ");
                 console.log(result);
 
+                sessionStorage.setItem("bookingId", result.bookingId);
                 return fetch(`http://localhost:8080/api/billing/by-bookingid/${result.bookingId}`);
             })
             .then((billingResponse) => {
@@ -187,35 +188,32 @@ function Return() {
 
     const handleUpdateBillingInfo = async () => {
         try {
-            const updatedBillingData = {
-                billAmount: totalCost, // Update with the new bill amount
-                fuelStatus: fuelStatus, // Update with the selected fuel status
-                endDate: currentDateTime // Keep the existing endDate
-            }; 
-            console.log("-> ");
-            console.log(updatedBillingData); 
-            // console.log(totalCost);
-            // console.log(billing.userEmailId); 
-
-
-            const response = await fetch(`http://localhost:8080/api/updatebilling/${billing.userEmailId}`, { 
-                method: 'PUT',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(updatedBillingData),
-            });
-
-            if (response.ok) {
-                console.log('Billing record updated successfully.');
-                // Perform any additional actions after successful update 
-            } else {
-                console.error('Failed to update billing record.');
-            }
+          const updatedBillingData = {
+            billAmount: totalCost, // Update with the new bill amount
+            fuelStatus: fuelStatus, // Update with the selected fuel status
+            endDate: currentDateTime, // Keep the existing endDate
+          };
+      
+          const response = await fetch(`http://localhost:8080/api/updatebilling/${billing.userEmailId}`, {
+            method: 'PUT',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(updatedBillingData),
+          });
+      
+          if (response.ok) {
+            console.log('Billing record updated successfully.');
+            // Perform any additional actions after successful update
+            navigate("/inovice"); // Navigate to the Invoice component
+          } else {
+            console.error('Failed to update billing record.');
+          }
         } catch (error) {
-            console.error('Error updating billing record:', error);
+          console.error('Error updating billing record:', error);
         }
-    };
+      };
+      
 
 
 
